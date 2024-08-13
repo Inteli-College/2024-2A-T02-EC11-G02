@@ -12,9 +12,11 @@ Os requisitos não funcionais descrevem as qualidades e restrições do sistema,
 2. **Escalabilidade**:
    - O sistema deve ser escalável para suportar a análise de grandes áreas de floresta sem comprometer a performance.
    - O sistema também deve ser compátivel com os serviços e interfaces da Abundance.
+   - Os dados devem ser processados pelo drone e enviados para um backend.
 
 3. **Segurança**:
    - Os dados armazenados devem ser protegidos contra acessos não autorizados.
+   - A solução deve estar em conformidade com regulamentos de proteção de dados e privacidade relevantes, especialmente considerando que envolve dados sensíveis de florestas.
 
 4. **Confiabilidade**:
    - O sistema deve ter alta disponibilidade e ser resistente a falhas.
@@ -30,3 +32,4 @@ Os requisitos não funcionais descrevem as qualidades e restrições do sistema,
 
 7. **Compatibilidade**:
    - A dashboard deve ser acessível a partir de diferentes dispositivos e navegadores.
+   - A solução deve ser compatível com os dispositivos que capturam as imagens (drones/satélites), garantindo que o modelo possa ser operacionalizado em ambientes reais.
