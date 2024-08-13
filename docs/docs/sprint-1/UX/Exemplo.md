@@ -7,9 +7,9 @@ sidebar_position: 1
 
 ## Privacidade e proteção de dados (Uso e armazenamento)
 
-A LGPD, ou *Lei Geral de Proteção de Dados*, é uma legislação brasileira que visa regulamentar o tratamento de dados pessoais no país. Tem como objetivo proteger os direitos fundamentais de liberdade e privacidade, bem como o livre desenvolvimento da personalidade da pessoa natural. Ela estabelece regras claras sobre a coleta, armazenamento, processamento e compartilhamento de dados pessoais, visando garantir a privacidade e a segurança dos dados dos cidadãos brasileiros.  No contexto deste projeto, que utiliza imagens de satélite e drones para contagem de árvores em áreas florestais, é essencial analisar as questões de privacidade e proteção de dados.
+A LGPD, ou *Lei Geral de Proteção de Dados*, é uma legislação brasileira que visa regulamentar o tratamento de dados pessoais no país (Lei nº 13.709/2018). Tem como objetivo proteger os direitos fundamentais de liberdade e privacidade, bem como o livre desenvolvimento da personalidade da pessoa natural. Ela estabelece regras claras sobre a coleta, armazenamento, processamento e compartilhamento de dados pessoais, visando garantir a privacidade e a segurança dos dados dos cidadãos brasileiros (LGPD).  No contexto deste projeto, que utiliza imagens de satélite e drones para contagem de árvores em áreas florestais, é essencial analisar as questões de privacidade e proteção de dados.
 
-* ***Coleta e Armazenamento de Dados:*** As imagens capturadas por satélites e drones podem conter informações sensíveis sobre as áreas florestais e, possivelmente, sobre as comunidades que habitam essas regiões. É crucial que o processo de coleta e armazenamento dessas imagens esteja em total conformidade com a LGPD. Isso inclui a adoção de medidas de segurança para proteger os dados contra acessos não autorizados e a implementação de políticas claras de retenção e descarte de dados.
+* ***Coleta e Armazenamento de Dados:*** As imagens capturadas por satélites e drones podem conter informações sensíveis sobre as áreas florestais e, possivelmente, sobre as comunidades que habitam essas regiões. É crucial que o processo de coleta e armazenamento dessas imagens esteja em total conformidade com a LGPD. Isso inclui a adoção de medidas de segurança para proteger os dados contra acessos não autorizados e a implementação de políticas claras de retenção e descarte de dados(ANPD).
 
 * ***Uso de Informações:*** O uso das imagens deve ser restrito ao propósito específico do projeto, que é a contagem de árvores para a geração de créditos de carbono. Qualquer outra utilização dos dados, seja para análises adicionais ou compartilhamento com terceiros, deve ser previamente autorizada pelos responsáveis.
 
@@ -17,13 +17,13 @@ A LGPD, ou *Lei Geral de Proteção de Dados*, é uma legislação brasileira qu
 
 ## Equidade e Justiça
 
-A análise de Equidade e Justiça pode ser representado como métricas e indicadores que avaliam o acesso igualitário a recursos, serviços e oportunidades, bem como a distribuição justa de benefícios e ônus dentro de uma sociedade, organização ou sistema. Esta abordagem visa garantir a inclusão e dignidade para todos os envolvidos, especialmente as comunidades dependentes das florestas, promovendo a justiça social e eliminando disparidades.
+A análise de Equidade e Justiça pode ser representado como métricas e indicadores que avaliam o acesso igualitário a recursos, serviços e oportunidades, bem como a distribuição justa de benefícios e ônus dentro de uma sociedade, organização ou sistema (Declaração Universal dos Direitos Humanos, Artigo 7 e Artigo 21). Esta abordagem visa garantir a inclusão e dignidade para todos os envolvidos, especialmente as comunidades dependentes das florestas, promovendo a justiça social e eliminando disparidades(OIT).
 
-* ***Impacto em Comunidades Locais:*** É essencial considerar e documentar os possíveis impactos da implementação da tecnologia sobre as comunidades locais, especialmente aquelas que dependem diretamente das florestas, como grupos indígenas e comunidades tradicionais. Garantir que essas comunidades sejam consultadas no processo de tomada de decisões é fundamental para evitar a marginalização e assegurar que os benefícios do projeto sejam equitativamente distribuídos.
+* ***Impacto em Comunidades Locais:*** É essencial considerar e documentar os possíveis impactos da implementação da tecnologia sobre as comunidades locais, especialmente aquelas que dependem diretamente das florestas, como grupos indígenas e comunidades tradicionais. Garantir que essas comunidades sejam consultadas no processo de tomada de decisões é fundamental para evitar a marginalização e assegurar que os benefícios do projeto sejam equitativamente distribuídos(Banco Mundial).
 
-* ***Minimização de Disparidades:*** O projeto deve incluir medidas para identificar e minimizar qualquer disparidade que possa surgir da implementação da tecnologia. Isso inclui garantir que todos os grupos, especialmente os mais vulneráveis, tenham acesso equitativo aos benefícios do projeto, como os créditos de carbono, e que não sejam desproporcionalmente afetados por eventuais impactos negativos.
+* ***Minimização de Disparidades:*** O projeto deve incluir medidas para identificar e minimizar qualquer disparidade que possa surgir da implementação da tecnologia. Isso inclui garantir que todos os grupos, especialmente os mais vulneráveis, tenham acesso equitativo aos benefícios do projeto, como os créditos de carbono, e que não sejam desproporcionalmente afetados por eventuais impactos negativos(Banco Mundial).
 
-* ***Inclusão e Participação:*** A inclusão ativa de todos os stakeholders, com um foco particular nas comunidades locais, é crucial para a justiça social no projeto. Isso implica promover a participação dessas comunidades nas decisões que afetarão suas vidas e territórios, garantindo transparência, respeito e cooperação em todas as etapas do projeto.
+* ***Inclusão e Participação:*** A inclusão ativa de todos os stakeholders, com um foco particular nas comunidades locais, é crucial para a justiça social no projeto. Isso implica promover a participação dessas comunidades nas decisões que afetarão suas vidas e territórios, garantindo transparência, respeito e cooperação em todas as etapas do projeto(OIT).
 
 
 ## Transparência e consentimento informado
@@ -71,3 +71,23 @@ O processo de treinamento de um modelo de IA pode sofre com viéses que estam re
 
 
 # Referências
+
+1. **Presidência da República. (2018).** Lei nº 13.709, de 14 de agosto de 2018. Brasília: Casa Civil - Subchefia para Assuntos Jurídicos. 
+
+Disponível em: http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm
+
+2. **Autoridade Nacional de Proteção de Dados (ANPD).** (n.d.). Portal da ANPD. 
+
+Disponível em: https://www.gov.br/anpd/pt-br
+
+3. **Assembleia Geral das Nações Unidas. (1948).** Declaração Universal dos Direitos Humanos. Paris. 
+
+Disponível em: https://www.un.org/en/about-us/universal-declaration-of-human-rights
+
+4. **Organização Internacional do Trabalho (OIT).** (n.d.). Igualdade e Discriminação. 
+
+Disponível em: https://www.ilo.org/global/topics/equality-and-discrimination/lang--en/index.htm
+
+5. **Banco Mundial.** (n.d.). Guia de Impacto Social e Ambiental. 
+
+Disponível em: https://www.worldbank.org/en/projects-operations/environmental-and-social-policies
