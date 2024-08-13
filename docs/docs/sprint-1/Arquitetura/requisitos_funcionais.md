@@ -23,4 +23,6 @@ Os requisitos funcionais descrevem as funcionalidades que o sistema deve ter par
 
 5. **Relatórios**:
    - O sistema deve ser capaz de gerar relatórios detalhados sobre a análise das árvores.
+   - O sistema deve gerar relatórios detalhados com os resultados da contagem de árvores, incluindo métricas de precisão e eficiência.
+   - Os relatórios devem incluir informações adicionais, como a área total analisada e o tempo de processamento.
 
