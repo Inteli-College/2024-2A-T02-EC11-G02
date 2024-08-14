@@ -66,9 +66,9 @@ const config = {
       // Replace with your project's social card
       image: "img/inteli.svg",
       navbar: {
-        title: "Grupo2",
+        title: "AR3S",
         logo: {
-          alt: "My Site Logo",
+          alt: "Inteli Logo",
           src: "img/inteli.svg",
         },
         items: [

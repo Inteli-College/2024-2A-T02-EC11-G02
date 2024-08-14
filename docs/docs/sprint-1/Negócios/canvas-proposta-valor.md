@@ -1,1 +1,0 @@
-# Canvas Proposta de Valor

@@ -1,3 +1,8 @@
+---
+title: Requisitos Funcionais
+sidebar_position: 1
+---
+
 # Requisitos Funcionais
 
 Os requisitos funcionais descrevem as funcionalidades que o sistema deve ter para atender às necessidades do usuário e alcançar os objetivos do projeto. Eles são essenciais para o planejamento e desenvolvimento do sistema, garantindo que todos os aspectos críticos sejam considerados e implementados.

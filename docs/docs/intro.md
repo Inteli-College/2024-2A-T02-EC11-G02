@@ -1,97 +1,21 @@
 ---
-title: Introdução
 sidebar_position: 1
-slug: /
 ---
 
 # Introdução
 
-TO-DO
+_To-do_
 
-## Objetivo
+## Sprint I
 
-TO-DO
+A primeira sprint do projeto foi dedicada ao entendimento inicial da proposta apresentada pelo parceiro de projeto do atual módulo: a Abundance. A partir da introdução ao problema a ser solucionado, foi possível desenvolver uma versão inicial da arquitetura da solução, refletir e discorrer sobre aspectos éticos relacionados ao projeto, realizar a elicitação de requisitos funcionais e não funcionais e elaborar a proposta de valor da solução. Abaixo, é possível conferir a apresentação desenvolvida com a finalidade de validar os elementos mencionados com o parceiro após as duas primeiras semanas do projeto.
 
-## Sprint 1
+[Link da Apresentação](https://www.canva.com/design/DAGNpmUOvWY/Gw6Dxmuhb92pNnTuBn0p7w/view?utm_content=DAGNpmUOvWY&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
-Nesta sprint, estabelecemos nosso primeiro contato com o parceiro de projeto, e por conta disso direcionando nosso foco para os artefatos abaixo:
-
-- **TO-DO** 
-- **TO-DO** 
-- **TO-DO** 
-
-**Apresentação de sprint review**
-
-  <iframe loading="lazy" 
-    src="https:www.canva.comdesignDAFyTPtqOFEZKer5UDsw8Zz2TPyj8lexAview?embed" allowfullscreen="allowfullscreen" allow="fullscreen" width="600" height="400">
-  </iframe>
-
-<a href="https:www.canva.comdesignDAFyTPtqOFEZKer5UDsw8Zz2TPyj8lexAview?utm_content=DAFyTPtqOFE&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">apresentação sprint 1</a>
-
-## Sprint 2
-
-TO-DO
-
-### TO-DO
-
-- **Objetivo:** TO-DO
-  - TO-DO
-
-**Apresentação de sprint review**
 
 <iframe loading="lazy"
-  src="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" width="600" height="400">
+    style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNpmUOvWY&#x2F;sLBiKmd1eifRcLapwvwGMQ&#x2F;view?embed">
 </iframe>
 
-<a href="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?utm_content=DAGEvH8gQCY&;utm_campaign=designshare&;utm_medium=embeds&;utm_source=link" target="_blank" rel="noopener">HERMES sprint2</a>
-
-## Sprint 3
-
-TO-DO
-
-### TO-DO
-
-- **Objetivo:** TO-DO
-  - TO-DO
-
-**Apresentação de sprint review**
-
-<iframe loading="lazy"
-  src="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" width="600" height="400">
-</iframe>
-
-<a href="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?utm_content=DAGEvH8gQCY&;utm_campaign=designshare&;utm_medium=embeds&;utm_source=link" target="_blank" rel="noopener">HERMES sprint2</a>
-
-## Sprint 4
-
-TO-DO
-
-### TO-DO
-
-- **Objetivo:** TO-DO
-  - TO-DO
-
-**Apresentação de sprint review**
-
-<iframe loading="lazy"
-  src="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" width="600" height="400">
-</iframe>
-
-<a href="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?utm_content=DAGEvH8gQCY&;utm_campaign=designshare&;utm_medium=embeds&;utm_source=link" target="_blank" rel="noopener">HERMES sprint2</a>
-
-## Sprint 5
-
-TO-DO
-
-### TO-DO
-
-- **Objetivo:** TO-DO
-  - TO-DO
-
-**Apresentação de sprint review**
-
-<iframe loading="lazy"
-  src="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" width="600" height="400">
-</iframe>
-
-<a href="https://www.canva.com/design/DAGEvH8gQCY/Acm1h5MZTnyZoTlaQUd4wg/view?utm_content=DAGEvH8gQCY&;utm_campaign=designshare&;utm_medium=embeds&;utm_source=link" target="_blank" rel="noopener">HERMES sprint2</a>
+## Sprint II

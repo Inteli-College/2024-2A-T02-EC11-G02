@@ -1,9 +1,9 @@
 {
     "label": "Introdução",
-    "position": 4,
+    "position": 1,
     "link": {
         "label": "Introdução",
-        "url": "https://www.notion.so/Introdu-o-1e1b3b3b1b7b4b3b8",
+        "url": "http://localhost:3000/2024-2A-T02-EC11-G02/intro",
         "description": "Na primeira sprint, nosso principal foco está em contextualizar o projeto com uma arquitetura inicial e, principalmente, com foco no nosso entendimento das necessidades de negócios do usuário."
     }
   }

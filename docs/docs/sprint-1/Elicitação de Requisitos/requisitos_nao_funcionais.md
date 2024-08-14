@@ -1,3 +1,8 @@
+---
+title: Requisitos Não Funcionais
+sidebar_position: 2
+---
+
 # Requisitos Não Funcionais
 
 Os requisitos não funcionais descrevem as qualidades e restrições do sistema, como desempenho, escalabilidade e segurança. Eles são cruciais para garantir que o sistema não apenas funcione corretamente, mas também ofereça uma boa experiência ao usuário, seja seguro e fácil de manter.
