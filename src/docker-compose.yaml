@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  mongo:
+    build: ./mongo
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+
+  logging:
+    build:
+      context: .
+      dockerfile: logging/Dockerfile
+    container_name: logging
+    ports:
+      - "8003:8003"
