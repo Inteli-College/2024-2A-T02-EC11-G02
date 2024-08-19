@@ -5,8 +5,6 @@ sidebar_position: 4
 
 # Proposta de Valor
 
-## Descrição
-
 O canvas proposta de valor, representa de maneira visual o valor que a solução oferece aos seus clientes-alvo. Nesta solução, ela se materializa em um modelo de visão computacional avançado para a contagem automática de árvores. O sistema é movido por algoritmos de deep learning, na intenção de garantir precisão, eficiência e um equilíbrio de custos na detecção e contagem das árvores.
 Além da automação da contagem, a solução proporciona uma interface de usuário intuitiva e APIs para a análise e visualização dos dados gerados. Isso permite que os usuários não apenas monitorem grandes áreas florestais com facilidade, mas também obtenham dados confiáveis que são essenciais para o cálculo de créditos de carbono, para a avaliação do impacto ambiental e na geração de relatórios para os órgãos competentes.
 
