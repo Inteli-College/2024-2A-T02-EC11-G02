@@ -28,6 +28,10 @@ A análise de Equidade e Justiça pode ser representado como métricas e indicad
 
 ## Transparência e consentimento informado
 
+##  Responsabilidade social
+
+A responsabilidade social analisa o possível impacto (seja positivo ou negativo) que um projeto tem e/ou pode ter em diferentes ambientes sociais. Essa análise é importante, pois, dependendo do impacto que o desenvolvimento possa oferecer, ele precisa se enquadrar em regras, como por exemplo, a LGPD, leis (sejam estaduais, federais ou de qualquer natureza parecida), para evitar problemas sociais, de privacidade ou qualquer violação que afete a integridade física, intelectual, moral ou ética de qualquer pessoa, cnpj, govenamental ou de patrimônio público ou privado.
+
 Socialmente, a implementação dessa tecnologia de contagem automatizada de árvores traz um impacto significativo. Ao automatizar o processo de contagem, a Abundance Brasil não apenas aumenta a precisão e a eficiência, mas também libera recursos humanos que podem ser redirecionados para outras áreas críticas de conservação. A diminuição da dependência de métodos manuais, que são trabalhosos e propensos a erros, pode promover um ambiente de trabalho mais seguro e produtivo para as equipes de campo. Além disso, a escalabilidade oferecida pela solução permite que a Abundance Brasil monitore florestas em escala global, potencialmente influenciando políticas públicas e práticas de sustentabilidade em outras regiões. Este avanço tecnológico não apenas contribui para a preservação ambiental, mas também fortalece o papel social da empresa como líder em inovação para a conservação, inspirando outras organizações a adotarem práticas semelhantes ou possíveis parcerias.
 
 Procurando análisar o impacto que o projeto pode ofecer, tanto positivamente quanto negativamente, esse forma os possíveis pontos encontrados:
