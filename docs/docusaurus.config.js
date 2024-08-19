@@ -12,6 +12,7 @@ import rehypeKatex from "rehype-katex";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Grupo 2",
+  staticDirectories: ['public', 'static'],
   tagline: "Dinosaurs are cool",
   favicon: "img/inteli.svg",
 
