@@ -28,30 +28,36 @@ A análise de Equidade e Justiça pode ser representado como métricas e indicad
 
 ## Transparência e consentimento informado
 
-
-
-
-##  Responsabilidade social
-
-A responsabilidade social analisa o possível impacto (seja positivo ou negativo) que um projeto tem e/ou pode ter em diferentes ambientes sociais. Essa análise é importante, pois, dependendo do impacto que o desenvolvimento possa oferecer, ele precisa se enquadrar em regras, como por exemplo, a LGPD, leis (sejam estaduais, federais ou de qualquer natureza parecida), para evitar problemas sociais, de privacidade ou qualquer violação que afete a integridade física, intelectual, moral ou ética de qualquer pessoa, cnpj, govenamental ou de patrimônio público ou privado.
+Socialmente, a implementação dessa tecnologia de contagem automatizada de árvores traz um impacto significativo. Ao automatizar o processo de contagem, a Abundance Brasil não apenas aumenta a precisão e a eficiência, mas também libera recursos humanos que podem ser redirecionados para outras áreas críticas de conservação. A diminuição da dependência de métodos manuais, que são trabalhosos e propensos a erros, pode promover um ambiente de trabalho mais seguro e produtivo para as equipes de campo. Além disso, a escalabilidade oferecida pela solução permite que a Abundance Brasil monitore florestas em escala global, potencialmente influenciando políticas públicas e práticas de sustentabilidade em outras regiões. Este avanço tecnológico não apenas contribui para a preservação ambiental, mas também fortalece o papel social da empresa como líder em inovação para a conservação, inspirando outras organizações a adotarem práticas semelhantes ou possíveis parcerias.
 
 Procurando análisar o impacto que o projeto pode ofecer, tanto positivamente quanto negativamente, esse forma os possíveis pontos encontrados:
 
-
-
 ### Impacto Sociais Positivos:
 
+***Precisão e eficiência:*** A automação da contagem de árvores reduz drasticamente os erros comuns em processos manuais, aumentando a precisão dos dados. Isso não apenas torna o processo mais eficiente, mas também oferece maior segurança e confiança aos consumidores, que podem ter certeza de que os dados fornecidos são precisos e confiáveis.
 
+***Fortalecimento do papel social:*** Ao contribuir significativamente para a preservação e restauração de florestas, a Abundance Brasil se posiciona como uma líder em inovação ambiental. Essa contribuição direta para a sustentabilidade global também reforça o papel social da empresa, inspirando outras organizações a adotarem práticas semelhantes e promovendo possíveis parcerias estratégicas.
+
+***Escalabilidade:*** A solução permite o monitoramento eficiente de florestas em escala global, o que pode influenciar positivamente políticas públicas e práticas de sustentabilidade em diferentes regiões. Essa capacidade de escalar o monitoramento oferece uma plataforma para a Abundance Brasil influenciar mudanças significativas em nível global.
 
 
 ### Impactos Sociais Negativos:
 
+***Risco de desconexão com a realidade local:*** A automação em larga escala pode resultar em uma desconexão entre os dados coletados e a realidade local das florestas, ignorando nuances que apenas o monitoramento humano poderia captar, como impactos sociais ou culturais específicos das comunidades locais.
 
+***Dependência de tecnologia:*** A crescente dependência de tecnologias automatizadas pode criar vulnerabilidades, como falhas técnicas, dificuldades de manutenção, ou até mesmo ataques cibernéticos, que poderiam comprometer todo o processo de monitoramento e conservação.
 
 
 ## Viés
 
 O processo de treinamento de um modelo de IA pode sofre com viéses que estam relacionados principalmente com a base de dados. Os viéses são tendencias descristas na fonte dados que alimentam o modelo e/ou no tratamento das informações antes de serem processadas. Essas tendencias geram um desvio nos resultados, influenciando a IA que traz respostas distorcidas ou que não condiz com a realidade. A seguir alguns dos exemplos de viéses que podem ocorrer durante o processo de criação e como podem ocorrer.
+
+##  Responsabilidade social
+
+A responsabilidade social analisa o possível impacto (seja positivo ou negativo) que um projeto tem e/ou pode ter em diferentes ambientes sociais. Essa análise é importante, pois, dependendo do impacto que o desenvolvimento possa oferecer, ele precisa se enquadrar em regras, como por exemplo, a LGPD, leis (sejam estaduais, federais ou de qualquer natureza parecida), para evitar problemas sociais, de privacidade ou qualquer violação que afete a integridade física, intelectual, moral ou ética de qualquer pessoa, cnpj, govenamental ou de patrimônio público ou privado.
+
+
+
 
 * ***Viés de Amostragem:*** Ocorre quando os dados utilizados  para treinar o modelo não são representativos da população ou do problema como o todo. Por exemplo, se um modelo de reconhecimento facial for treinado predominantimente com imagens de pessoas de um determinado grupo étnico, ele pode ter um desempenho ruim ao tentar identificar rostos de outros grupos étcnicos.
 
