@@ -1,0 +1,118 @@
+2024-08-21 18:24:10	Photoshop iniciado
+2024-08-21 18:24:35	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-21 18:25:04	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 18:25:27	Arquivo Sem Título-1 aberto
+2024-08-21 18:25:53	Arquivo Sem Título-1 fechado
+2024-08-21 18:25:54	Photoshop encerrado
+2024-08-21 19:39:20	Photoshop iniciado
+2024-08-21 19:39:32	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-21 19:49:08	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-21 19:52:03	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 19:52:03	Arquivo C:\Users\jvoli\Documents\Programação\2024-2A-T02-EC11-G02\local_testes\Captura de tela 2024-08-20 111207.psd salvo
+2024-08-21 19:52:04	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 19:52:05	Photoshop encerrado
+2024-08-21 19:56:30	Photoshop iniciado
+2024-08-21 19:56:43	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-21 20:06:19	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-21 20:18:47	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 20:18:47	Arquivo C:\Users\jvoli\Documents\Programação\2024-2A-T02-EC11-G02\local_testes\Captura de tela 2024-08-20 111207.psd salvo
+2024-08-21 20:18:48	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 20:18:49	Photoshop encerrado
+2024-08-21 20:18:58	Photoshop iniciado
+2024-08-21 20:19:11	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-21 20:22:01	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 20:22:01	Photoshop encerrado
+2024-08-21 20:23:55	Photoshop iniciado
+2024-08-21 20:24:14	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-21 20:25:17	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-21 20:25:17	Photoshop encerrado
+2024-08-22 07:39:52	Photoshop iniciado
+2024-08-22 07:40:06	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 07:41:37	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 07:41:37	Photoshop encerrado
+2024-08-22 07:43:36	Photoshop iniciado
+2024-08-22 07:43:49	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 07:44:15	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 07:44:16	Photoshop encerrado
+2024-08-22 07:49:54	Photoshop iniciado
+2024-08-22 07:50:10	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 07:50:41	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 07:50:42	Photoshop encerrado
+2024-08-22 07:52:35	Photoshop iniciado
+2024-08-22 07:52:44	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 08:02:21	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 08:11:57	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 08:13:06	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 08:13:06	Arquivo C:\Users\jvoli\Documents\Programação\2024-2A-T02-EC11-G02\local_testes\Captura de tela 2024-08-20 111207.psd salvo
+2024-08-22 08:13:07	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 08:13:07	Photoshop encerrado
+2024-08-22 09:06:47	Photoshop iniciado
+2024-08-22 09:06:59	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 09:16:36	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 09:26:12	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 09:35:48	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 09:40:16	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 09:40:16	Arquivo C:\Users\jvoli\Documents\Programação\2024-2A-T02-EC11-G02\local_testes\Captura de tela 2024-08-20 111207.psd salvo
+2024-08-22 09:40:17	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 09:40:17	Photoshop encerrado
+2024-08-22 09:46:20	Photoshop iniciado
+2024-08-22 09:46:32	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 09:56:08	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 10:00:54	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 10:00:54	Photoshop encerrado
+2024-08-22 10:04:54	Photoshop iniciado
+2024-08-22 10:05:04	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 10:06:58	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 10:06:58	Photoshop encerrado
+2024-08-22 11:07:00	Photoshop iniciado
+2024-08-22 11:07:13	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 11:09:27	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 11:09:27	Photoshop encerrado
+2024-08-22 11:58:39	Photoshop iniciado
+2024-08-22 11:58:53	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 12:56:52	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 16:05:14	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 16:05:15	Photoshop encerrado
+2024-08-22 17:48:31	Photoshop iniciado
+2024-08-22 17:48:48	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 17:58:25	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 20:02:27	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 20:12:03	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-22 20:15:23	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 20:15:23	Photoshop encerrado
+2024-08-22 20:29:41	Photoshop iniciado
+2024-08-22 20:29:52	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-22 20:30:05	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-22 20:30:05	Photoshop encerrado
+2024-08-23 08:35:32	Photoshop iniciado
+2024-08-23 08:36:24	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 08:39:45	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 08:39:45	Photoshop encerrado
+2024-08-23 08:44:44	Photoshop iniciado
+2024-08-23 08:44:55	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 08:50:21	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 08:50:22	Photoshop encerrado
+2024-08-23 08:51:06	Photoshop iniciado
+2024-08-23 08:51:15	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 08:52:25	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 08:52:25	Photoshop encerrado
+2024-08-23 09:17:04	Photoshop iniciado
+2024-08-23 09:17:15	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 09:19:48	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 09:19:48	Photoshop encerrado
+2024-08-23 09:28:09	Photoshop iniciado
+2024-08-23 09:28:18	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 09:37:54	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-23 09:47:31	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-23 09:57:07	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-23 09:58:27	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 09:58:27	Photoshop encerrado
+2024-08-23 10:00:42	Photoshop iniciado
+2024-08-23 10:00:51	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 10:02:27	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 10:02:27	Photoshop encerrado
+2024-08-23 10:06:06	Photoshop iniciado
+2024-08-23 10:06:14	Arquivo Captura de tela 2024-08-20 111207.psd aberto
+2024-08-23 10:15:51	Arquivo C:\Users\jvoli\AppData\Roaming\Adobe\Adobe Photoshop 2024\AutoRecover\_Captura de tela 2024-08-20 1112077E85144886855196BC7D5424935A6C41.psb salvo
+2024-08-23 10:37:27	Arquivo Captura de tela 2024-08-20 111207.psd fechado
+2024-08-23 10:37:27	Photoshop encerrado
