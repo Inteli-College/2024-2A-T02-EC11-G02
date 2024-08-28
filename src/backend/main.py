@@ -4,12 +4,18 @@ from firebase_admin import credentials
 from firebase_admin import storage
 import os
 from backend.routers import S3Router, modelVersion, saveImage, pullArrayBytes
+from dotenv import load_dotenv
+
+load_dotenv()
+
+firebase_storage_bucket = os.getenv('FIREBASE_STORAGE_BUCKET')
+firebase_key_path = os.getenv('FIREBASE_KEY_PATH')
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
-key_path = os.path.join(current_directory, 'serviceAccountKey.json')
+key_path = os.path.join(current_directory, firebase_key_path)
 cred = credentials.Certificate(key_path)
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'grupo2-93568-589050f73fa8.appspot.com'
+    'storageBucket': firebase_storage_bucket
 })
 
 bucket = storage.bucket()
