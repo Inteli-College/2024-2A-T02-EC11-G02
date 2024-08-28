@@ -1,6 +1,5 @@
 version: '2'
 services:
-
   mongo:
   app:
     build: .
@@ -16,7 +15,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
-
   logging:
     build:
       context: .
