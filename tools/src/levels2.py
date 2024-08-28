@@ -48,24 +48,28 @@ def level_image_numpy(image_np, minv=0, maxv=255, gamma=1.0):
     
     return rgb_image
 
-# Exemplo de uso
-image = cv2.imread('dataset/04.png')
-imagem_cinza = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-adjusted_image = level_image_numpy(imagem_cinza, minv=0, maxv=0, gamma=0)
+def main():
+    # Exemplo de uso
+    image = cv2.imread('dataset/04.png')
+    imagem_cinza = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    adjusted_image = level_image_numpy(imagem_cinza, minv=55, maxv=150, gamma=10)
 
-# Exibe a imagem original e a ajustada
-plt.figure(figsize=(10, 5))
+    # Exibe a imagem original e a ajustada
+    plt.figure(figsize=(10, 5))
 
-# Exibir imagem original
-plt.subplot(1, 2, 1)
-plt.title("Original")
-plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # Converte BGR para RGB para exibir corretamente
-
-
-# Exibir imagem ajustada
-plt.subplot(1, 2, 2)
-plt.title("Ajustada")
-plt.imshow(adjusted_image)
+    # Exibir imagem original
+    plt.subplot(1, 2, 1)
+    plt.title("Original")
+    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # Converte BGR para RGB para exibir corretamente
 
 
-plt.show()
+    # Exibir imagem ajustada
+    plt.subplot(1, 2, 2)
+    plt.title("Ajustada")
+    plt.imshow(adjusted_image)
+
+
+    plt.show()
+
+if __name__ == '__main__':
+    main()
