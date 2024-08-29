@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import storage
-import os
 from backend.routers import S3Router, modelVersion, saveImage, pullArrayBytes
 from dotenv import load_dotenv
+from firebase_admin import credentials
+from firebase_admin import storage
+import firebase_admin
+import os
 
 load_dotenv()
 
@@ -30,3 +30,5 @@ app.include_router(S3Router.router)
 app.include_router(saveImage.router)
 app.include_router(modelVersion.router)
 app.include_router(pullArrayBytes.router)
+
+saveImage.upload_image(bucket)

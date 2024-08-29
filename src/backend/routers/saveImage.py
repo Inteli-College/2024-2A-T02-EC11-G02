@@ -6,7 +6,7 @@ router = APIRouter()
 async def upload_image(file: UploadFile = File(...)):
     try:
         from ..main import bucket
-        
+
         # Define the destination file name in Firebase Storage
         destination_blob_name = f"uploads/{file.filename}"
 
