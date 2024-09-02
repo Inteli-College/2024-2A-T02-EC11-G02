@@ -1,5 +1,6 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# Este workflow fará uma instalação limpa das dependências do node, armazenará em cache/restaurará as dependências, 
+# construirá o código-fonte e executará testes em diferentes versões do node
+# Para mais informações, veja: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 name: Node.js CI
 
@@ -17,7 +18,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        # Veja a programação de lançamentos suportados do Node.js em https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -26,9 +27,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd docs
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    - run: npm run serve
-
+      working-directory: ./docs
+    - run: npm run build
+      working-directory: ./docs
+    - run: npm run test
+      working-directory: ./docs
+    - name: Serve website
+      run: npm run serve
+      working-directory: ./docs
