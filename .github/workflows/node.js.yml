@@ -1,37 +1,55 @@
-name: Node.js CI
+name: Deploy Docusaurus
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    push:
+        branches: ['main']
+        paths:
+            - 'docs/**'
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+concurrency:
+    group: 'pages'
+    cancel-in-progress: true
+
+env:
+    NODE_OPTIONS: --max-old-space-size=6144
 
 jobs:
-  build:
+    build-docusaurus:
+        environment:
+            name: github-pages
+            url: /Grupo6
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+            - name: Install and Build
+              run: |
+                  cd docs
+                  npm install
+                  npm run build
+                  mv build ../build
 
-    - run: npm ci
-      working-directory: ./docs
+            - name: Setup Pages
+              uses: actions/configure-pages@v4
 
-    - run: npm run build
-      working-directory: ./docs
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: ./build
 
-    - run: npm test
-      working-directory: ./docs
-
-    - name: Serve website
-      run: npm run serve
-      working-directory: ./docs
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
