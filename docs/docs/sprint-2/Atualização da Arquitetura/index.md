@@ -1,6 +1,6 @@
 ---
 title: Atualização de Arquitura
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Arquitetura V2.0

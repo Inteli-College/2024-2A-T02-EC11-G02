@@ -1,6 +1,6 @@
 ---
 title: Desenvolvimento do IoT
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # Configuração Inicial da Raspberry Pi 5 para IoT

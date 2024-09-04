@@ -1,6 +1,6 @@
 ---
 title: Visão Computacional
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 A fim de solucionar o principal problema apresentado pelo parceiro de projeto — a contagem de árvores por meio de imagens de satélite ou drone —, é possível a utilização de modelos de visão computacional pré-treinados para a identificação de objetos específicos, a exemplo do Yolo e do Deep Forest. Uma das abordagens utilizadas, nesse cenário, foi o [Deep Forest](https://www.weecology.org/software-projects/deepforest/).
