@@ -19,3 +19,12 @@ A primeira sprint do projeto foi dedicada ao entendimento inicial da proposta ap
 </iframe>
 
 ## Sprint II
+
+Na segunda sprint do projeto, após uma melhor compreensão acerca das expectativas do parceiro quanto à solução a ser entregue, o grupo se dedicou a iniciar os artefatos técnicos, assim como uma análise que reflete o impacto da iniciativa em caráter político, econômico, social, tecnológico, ecológico e legal. Diferentes técnicas de pré-processamento de imagens foram desenvolvidas e testadas. Além disso, foram explorados diferentes modelos de visão computacional pré-treinados, a exemplo do Yolo e do Deep Forest. Por fim, foram feitos a configuração inicial do back-end, um wireframe que reflete a interface a ser entregue para o parceiro e avanços na parte de IoT.
+
+[Link da Apresentação](https://www.canva.com/design/DAGOq_xx3ew/MySbNL7Xq7jQawBKOJSjwg/view?utm_content=DAGOq_xx3ew&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+<iframe loading="lazy"
+    style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGOq_xx3ew&#x2F;CoKnZH9W0i4J-JkrzlFbrQ&#x2F;view?embed">
+</iframe>
