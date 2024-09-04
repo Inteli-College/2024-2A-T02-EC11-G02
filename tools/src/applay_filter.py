@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from tools_image import ImageFilters
+import os
 
 tools = ImageFilters()
 
@@ -63,7 +64,7 @@ def get_mask(image_path):
 
 def segment_and_plot(image_path):
     image = cv2.imread(image_path)
-    image = tools.apply_color(image,[ 0, 0, 10 ])
+    image = tools.apply_color(image,[ 0, 0, 100 ])
     masked_image = cv2.bitwise_and(image, get_mask(image_path))
     plt.figure(figsize=(10, 10))
     plt.imshow(cv2.cvtColor(masked_image, cv2.COLOR_BGR2RGB))
@@ -78,9 +79,16 @@ def remuve_background(image_path):
 
 
 # Exemplo de uso
-image_path = f'dataset/maps_02.png'  
+image_path = f'dataset/teste.png'  
+
+
+# for filename in os.listdir("pasta_de_saida"):
+#     if filename.endswith(".jpg") or filename.endswith(".jpeg") or filename.endswith(".png"):
+#         image_path = os.path.join("pasta_de_saida", filename)
+#         save_image(remuve_background(image_path), f"processed_images/masked_{filename}.jpg")
+#         print(f"Image {filename} processed")
 
 remuve_background_and_plot(image_path)
 #segment_and_plot(image_path)
 #plot_images(remuve_background(image_path), "Final", 1)
-plt.show()
+#plt.show()

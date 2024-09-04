@@ -1,0 +1,8 @@
+{
+  "label": "Ánalise das Imagens", 
+  "position": 0,
+  "link": {
+    "type": "generated-index",
+    "description": "Estudo das imagens fornecidas pelo parceiro e das imagens de satélite."
+  }
+}
