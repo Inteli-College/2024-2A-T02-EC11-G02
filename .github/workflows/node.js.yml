@@ -23,7 +23,7 @@ jobs:
     build-docusaurus:
         environment:
             name: github-pages
-            url: /Grupo6
+            url: /Grupo2
         runs-on: ubuntu-latest
 
         steps:

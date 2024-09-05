@@ -3,39 +3,49 @@ title: Ánalise das Imagens
 sidebar_position: 0
 ---
 
-# Configuração Inicial da Raspberry Pi 5 para IoT
+Este documento apresenta as investigações e transformações realizadas para identificar as características mais relevantes das imagens que podem ser úteis para o modelo. O objetivo é aprimorar a compreensão e otimizar o uso dessas características.
 
-## Descrição
-Estudo das imagens fornecidas pelo parceiro e das imagens de satélite.
+# Imagens Analisadas
 
-### Detalhes da Configuração
+Utilizamos tanto as imagens de drones fornecidas pelo nosso parceiro quanto [datasets de satelite](https://www.kaggle.com/datasets/mskorski/tree-counting-image-dataset).
 
-- **Sistema Operacional**: Ubuntu para Raspberry Pi
-  - A imagem do Ubuntu foi baixada e gravada em um cartão microSD utilizando o Raspberry Pi Imager.
-  - Após a inserção do cartão microSD na Raspberry Pi 5, foi realizada a configuração inicial do sistema, incluindo configuração de conexão à internet.
-  - O sistema foi atualizado para garantir que todos os pacotes estivessem na versão mais recente.
 
-- **Ambiente de Programação**:
-  - **Instalação do VSCode**:
-    - Ambiente de programação para utilizar o IOT.
+## Transformações 
 
-## GPS - GY-GPS6MV2 (Descontinuidade)
+Começamos análisando cada canal ( RGB ) de cor.
 
-Durante a tentativa de utilização do módulo GPS GY-GPS6MV2 com a Raspberry Pi 5, o dispositivo não funcionou como esperado. O problema identificado foi a ausência de um circuito intermediário para alinhar e filtrar as frequências do sinal do GPS, algo necessário para garantir o funcionamento do dispositivo.
+**Proximidades da Aurora Verde**
 
-- **Tentativas de Solução**:
-  - Foi considerada a utilização de um Arduino ou ESP32 como controlador externo para o GPS, com o objetivo de realizar o processamento dos sinais antes de enviá-los para a Raspberry Pi. No entanto, essa abordagem foi descartada..
+![1](/img/filter_segmtation/01.png)
+**Aurora Verde**
+![2](/img/filter_segmtation/02.png)
+**Ibirapuera**
+![3](/img/filter_segmtation/03.png)
 
-### Motivos da Descontinuidade do Uso do GPS
+Com base nessas três imagens de locais distintos, além de outras 15 analisadas, observei um padrão na tonalidade das imagens. Há um realce mais pronunciado nas regiões de vegetação em um canal de cor específico.
 
-O grupo decidiu descontinuar o foco na integração do módulo GPS GY-GPS6MV2 por vários motivos:
+Diante dessa hipótese, desenvolvi rapidamente um código que aplica filtros de **Curves** e **Levels** para acentuar ainda mais esse realce nas regiões de vegetação. Chegando nos seguintes resultados:
 
-- **Indisponibilidade do circuito na Faculdade**: A Faculdade não tinha a aquisição do cirtuito para dar continuidade do desenvolvimento.
+### Proximidades da Aurora Verde
+![4](/img/filter_segmtation/04.png)
+### Aurora Verde
+![5](/img/filter_segmtation/05.png)
+### Ibirapuera
+![6](/img/filter_segmtation/06.png)
 
-- **Aumento do Custo**: A adição de componentes como Arduino ou ESP32, elevaria os custos do projeto.
+### Filtro de Levels aplicado em python
+![code-01](/img/filter_segmtation/code01.png)
 
-- **Aumento da Complexidade da Arquitetura**: A inclusão de dispositivos adicionais na arquitetura aumentaria significativamente a complexidade do projeto, exigindo mais tempo e recursos para integração e testes.
+### Filtro de Curves aplicado em python
+![code-02](/img/filter_segmtation/code02.png)
 
-- **Prazo Curto**: Dado o tempo limitado disponível para o desenvolvimento do projeto (10 semanas), a equipe optou por concentrar esforços em outras áreas críticas da solução IoT (IA, Front-end e Back-end), evitando o risco de atrasos que poderiam comprometer o sucesso do projeto.
+A partir desse ponto, percebi a possibilidade de abordar o problema por outro caminho. Após a leitura de alguns artigos acadêmicos, descobri uma área da computação gráfica focada na detecção de objetos por meio de filtros.
 
-- **Redundância**: As mesmas informações que seriam utilizadas do sensor de GPS, podem ser também consultadas diretamente do Google Maps de forma manual.
+# Filters and Segmentation
+
+A área de **Filtros e Segmentação** na computação gráfica é voltada para a detecção e separação de objetos em imagens com base em características visuais, como cor, textura, bordas e formas.
+
+Os filtros, como aqueles aplicados em diferentes canais de cor ou em frequências espaciais, são usados para realçar detalhes específicos das imagens. Por exemplo, filtros de borda, como Sobel ou Canny, podem destacar contornos, enquanto filtros de suavização podem remover ruídos.
+
+Já a segmentação é o processo de dividir uma imagem em regiões distintas, agrupando pixels com propriedades semelhantes. Técnicas comuns incluem a segmentação por limiar, onde regiões são separadas com base em valores de cor ou intensidade, e métodos mais avançados como a segmentação por agrupamento ou aprendizado profundo, usados para identificar e classificar objetos em imagens complexas.
+

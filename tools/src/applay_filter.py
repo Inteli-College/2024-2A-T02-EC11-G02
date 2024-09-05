@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from tools_image import ImageFilters
-import os
+
 
 tools = ImageFilters()
 
@@ -79,7 +79,7 @@ def remuve_background(image_path):
 
 
 # Exemplo de uso
-image_path = f'dataset/teste.png'  
+image_path = f'dataset/02.png'  
 
 
 # for filename in os.listdir("pasta_de_saida"):

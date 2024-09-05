@@ -12,7 +12,7 @@ class ImageFilters:
         curve = np.interp(np.arange(256), curve_points[:, 0], curve_points[:, 1]).astype(np.uint8)
         
         # Aplica a curva a cada canal da imagem
-        if len(image.shape) == 2:  # Imagem em escala de cinza
+        if len(image.shape) == 2:  
             image_adjusted = cv2.LUT(image, curve)
         else:  # Imagem colorida
             channels = cv2.split(image)  # Divide os canais B, G, R
