@@ -29,7 +29,7 @@ else:
     imagem_cinza = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
-    adjusted_image = adjust_levels(imagem_cinza, in_black, in_white, gamma, out_black, out_white)
+    adjusted_image = adjust_levels(imagem_cinza, 0, 255, 1, 0, 255)
 
     # Exibe a imagem original e a ajustada
     plt.figure(figsize=(10, 5))

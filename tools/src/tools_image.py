@@ -95,8 +95,27 @@ class ImageFilters:
         
         return rgb_image
 
+    def get_filters(self):
+        return ['apply_curves','apply_color','apply_levels','apply_brightness_contrast','apply_kernal_bluer','level_image_numpy']
 
-
+    def color_density_mean(self,image):
+        # Verifica se a imagem tem 3 canais (RGB)
+        if len(image.shape) == 3:
+            # Calcula a média para cada canal de cor (B, G, R)
+            mean_blue = np.mean(image[:, :, 0])
+            mean_green = np.mean(image[:, :, 1])
+            mean_red = np.mean(image[:, :, 2])
+            
+            return {
+                'blue': float(mean_blue),
+                'green': float(mean_green),
+                'red': float(mean_red)
+            }
+        else:
+            # Se a imagem for em escala de cinza
+            mean_gray = np.mean(image)
+            return {'gray': mean_gray}
+        
 def main():
         
     a = ImageFilters()
