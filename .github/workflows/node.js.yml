@@ -36,10 +36,10 @@ jobs:
         
     - name: Deploy to GitHub Pages
       working-directory: ./docs
-      run: |
-        npm install -g gh-pages
-        # Configura o repositório remoto para usar o token de autenticação
-        git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-        gh-pages -d build
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # run: |
+      #   npm install -g gh-pages
+      #   # Configura o repositório remoto para usar o token de autenticação
+      #   git remote set-url origin https://x-access-token:${{ GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      #   gh-pages -d build
+      # env:
+      #   GITHUB_TOKEN: ${{ github.token }}
