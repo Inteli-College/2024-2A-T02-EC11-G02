@@ -28,7 +28,12 @@ jobs:
     - name: Build Docusaurus site
       working-directory: ./docs
       run: npm run build
-
+      
+    - name: Set up Git identity
+      run: |
+        git config --global user.name "jacksonwsaguiar"
+        git config --global user.email "jackson.aguiar@sou.inteli.edu.br"
+        
     - name: Deploy to GitHub Pages
       working-directory: ./docs
       run: |
