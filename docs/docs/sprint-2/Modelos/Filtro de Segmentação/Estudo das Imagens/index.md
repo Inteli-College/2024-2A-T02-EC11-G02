@@ -12,7 +12,7 @@ Utilizamos tanto as imagens de drones fornecidas pelo nosso parceiro quanto [dat
 
 ## Transformações 
 
-Começamos análisando cada canal ( RGB ) de cor.
+Começamos analisando cada canal (RGB) de cor.
 
 **Proximidades da Aurora Verde**
 
@@ -22,7 +22,7 @@ Começamos análisando cada canal ( RGB ) de cor.
 **Ibirapuera**
 ![3](/img/filter_segmtation/03.png)
 
-Com base nessas três imagens de locais distintos, além de outras 15 analisadas, observei um padrão na tonalidade das imagens. Há um realce mais pronunciado nas regiões de vegetação em um canal de cor específico.
+Com base nessas três imagens de locais distintos, além de outras 15 analisadas, foi possível observar um padrão na tonalidade das imagens. Há um realce mais pronunciado nas regiões de vegetação em um canal de cor específico.
 
 Diante dessa hipótese, desenvolvi rapidamente um código que aplica filtros de **Curves** e **Levels** para acentuar ainda mais esse realce nas regiões de vegetação. Chegando nos seguintes resultados:
 
