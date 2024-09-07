@@ -116,6 +116,31 @@ class ImageFilters:
             mean_gray = np.mean(image)
             return {'gray': mean_gray}
         
+    def apply_kmeans(self,image, k=3):
+        # Converte a imagem para o formato adequado
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = image.reshape((-1, 3))
+        image = np.float32(image)
+        
+        # Define os critérios de parada
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
+        
+        # Aplica o algoritmo K-Means
+        _, labels, centers = cv2.kmeans(image, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+        
+        # Converte de volta para o tipo de imagem original
+        centers = np.uint8(centers)
+        segmented_image = centers[labels.flatten()]
+        segmented_image = segmented_image.reshape(image.shape)
+        
+        return segmented_image
+    
+    def apply_kernel(self,image, kernel):
+        """
+        Espera uma imagem e um kernel e retorna a convolução.
+        """
+        return cv2.filter2D(image, -1, kernel)
+        
 def main():
         
     a = ImageFilters()
