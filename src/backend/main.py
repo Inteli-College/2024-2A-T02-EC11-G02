@@ -21,7 +21,7 @@ app.include_router(saveImage.router)
 
 # Other routers
 # app.include_router(S3Router.router)
-# app.include_router(modelVersion.router)
+app.include_router(modelVersion.router)
 # app.include_router(pullArrayBytes.router)
 
 if "__main__" == __name__:
