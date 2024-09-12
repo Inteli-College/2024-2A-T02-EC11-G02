@@ -3,7 +3,6 @@ import numpy as np
 import scipy.ndimage as ndi
 import matplotlib.pyplot as plt
 from tools_image import ImageFilters
-import os
 
 
 class FilteringSegmentation(ImageFilters):
@@ -16,7 +15,7 @@ class FilteringSegmentation(ImageFilters):
         self.G = 1
         self.B = 0
 
-    def choice_channel(self, image):
+    def choice_channel(self, image) -> int:
         B, G, R = cv2.split(image)
 
         trashold = 40
@@ -39,13 +38,16 @@ class FilteringSegmentation(ImageFilters):
     def remuve_background_and_plot(self,image_path):
         # Carregar a imagem
         image = cv2.imread(image_path)
+        mask_1 = self.get_texture_mask(image, 1, 100)
+        mask_1 = cv2.bitwise_and(image, mask_1)
+
 
         # Separar os canais R, G, B
         channels = cv2.split(image)
 
         # Aplicar a máscara à imagem original
-        mask = self.get_mask_by_channel(image_path, self.R)
-        masked_image = cv2.bitwise_and(image, mask)
+        mask = self.get_mask_by_channel(image_path, self.choice_channel(image))
+        masked_image = cv2.bitwise_and(mask_1, mask)
 
 
 
@@ -91,7 +93,7 @@ class FilteringSegmentation(ImageFilters):
     def get_height_by_channel(self,edited_image, channel, normal_image):
        
         channels = cv2.split(edited_image)
-        image_transform = super().apply_brightness_contrast(channels[channel], -40, 1.2)
+        image_transform = super().apply_brightness_contrast(channels[channel], -80, 1.2)
         image_transform = super().apply_curves(image_transform, np.array([[0,0], [58,136], [62, 177], [135, 85], [139, 154]])
 )
         image_transform = super().level_image_numpy(image_transform, 33, 52, 1.72)
@@ -113,6 +115,7 @@ class FilteringSegmentation(ImageFilters):
 
     def hailht_extractor(self, image_path):
         image = cv2.imread(image_path)
+        
 
         # Analisar a densidade de cor da imagem por canal para pegar o que há mais brilho.
         channels_mean = self.color_density_mean(image)
@@ -129,7 +132,7 @@ class FilteringSegmentation(ImageFilters):
         }
         channels[channel_hailht]
 
-        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image_path, self.B))
+        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image_path, self.R))
         hailhts = self.get_height_by_channel(masked_image, channels[channel_hailht], image)
         self.draw_rectangle(image,hailhts)
 
@@ -162,16 +165,47 @@ class FilteringSegmentation(ImageFilters):
         self.plot_images(normal_image, f"Numero de segmentos encontrados {num_features}", 1, "gray", 1, 1)
         plt.show()
 
+    def get_texture_mask(self, image, kernel_size=3, threshold_value=100):
+        """
+        Gera uma máscara binária a partir de uma imagem, aplicando um filtro de suavização 
+        e usando o gradiente de magnitude.
+        
+        Parâmetros:
+            image (cv2 image): imagem.
+            kernel_size (int): Tamanho do kernel para o filtro de suavização (default: 9).
+            threshold_value (int): Valor de limiar para a geração da máscara (default: 100).
+        
+        Retorna:
+            mask (numpy array): Máscara binária gerada a partir da imagem suavizada.
+        """
+        
+        # Calcular gradiente (derivada) da imagem
+        sobel_x = ndi.sobel(image, axis=0)
+        sobel_y = ndi.sobel(image, axis=1)
+        magnitude = np.hypot(sobel_x, sobel_y)
+
+        # Normalizar a magnitude para o intervalo [0, 255] e converter para uint8
+        magnitude = np.uint8(255 * (magnitude / np.max(magnitude)))
+
+        # Criar um kernel nxn onde todos os valores são 1/(kernel_size^2)
+        kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size)
+
+        # Aplicar o filtro de média
+        smoothed_image = cv2.filter2D(magnitude, -1, kernel)
+
+        # Aplicar um limiar (threshold) para criar uma máscara binária
+        _, mask = cv2.threshold(smoothed_image, threshold_value, 255, cv2.THRESH_BINARY)
+
+        return mask
+
+
+
 if __name__ == "__main__":
     pipeline = FilteringSegmentation()
-    # for filename in os.listdir("dataset"):
-    #     if filename.endswith(".jpg") or filename.endswith(".jpeg") or filename.endswith(".png"):
-    #         image_path = os.path.join("dataset", filename)
-    #         print(f'{filename} _ {pipeline.hailht_extractor(image_path)} \n')
-    teste = "dataset/train/frame_0000.jpg"
-    pipeline.remuve_background_and_plot(teste)
-    #pipeline.hailht_extractor("dataset/train/08.png")
-    image = cv2.imread(teste)
-    pipeline.choice_channel(image)
+    teste = "dataset/train/tst.png"
+    pipeline.hailht_extractor(teste)
+    #image = cv2.imread(teste)
+    #pipeline.remuve_background_and_plot(teste)
+    #pipeline.choice_channel(image)
 
 
