@@ -32,7 +32,7 @@ export default function HistoryPage() {
               <tr className="bg-white border-b">
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  className="px-6 py-4 w-1/7 font-medium text-gray-900 whitespace-nowrap"
                 >
                   <img src={Map} alt="" />
                 </th>
