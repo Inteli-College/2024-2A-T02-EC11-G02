@@ -2,8 +2,9 @@ import cv2
 import numpy as np
 import scipy.ndimage as ndi
 import matplotlib.pyplot as plt
-from .tools_image import ImageFilters
+from  routers.code.tools_image import ImageFilters
 import os
+
 
 class FilteringSegmentation(ImageFilters):
     def __init__(self):
@@ -14,8 +15,9 @@ class FilteringSegmentation(ImageFilters):
         self.R = 2
         self.G = 1
         self.B = 0
+        self.count = 0
 
-    def choice_channel(self, image):
+    def choice_channel(self, image: cv2.typing.MatLike) -> int:
         B, G, R = cv2.split(image)
 
         trashold = 40
@@ -30,7 +32,7 @@ class FilteringSegmentation(ImageFilters):
 
         return choice
 
-    def plot_images(self,image, title, position, cmap=None, nrows=2, ncols=3):
+    def plot_images(self,image: cv2.typing.MatLike, title, position, cmap=None, nrows=2, ncols=3):
         plt.subplot(nrows, ncols, position)
         plt.title(title)
         plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cmap=cmap)
@@ -38,13 +40,16 @@ class FilteringSegmentation(ImageFilters):
     def remuve_background_and_plot(self,image_path):
         # Carregar a imagem
         image = cv2.imread(image_path)
+        mask_1 = self.get_texture_mask(image, 1, 100)
+        mask_1 = cv2.bitwise_and(image, mask_1)
+
 
         # Separar os canais R, G, B
         channels = cv2.split(image)
 
         # Aplicar a máscara à imagem original
-        mask = self.get_mask_by_channel(image_path, self.R)
-        masked_image = cv2.bitwise_and(image, mask)
+        mask = self.get_mask_by_channel(image_path, self.choice_channel(image))
+        masked_image = cv2.bitwise_and(mask_1, mask)
 
 
 
@@ -63,14 +68,11 @@ class FilteringSegmentation(ImageFilters):
         # Mostrar as imagens
         plt.show()
 
-    def save_image(self,image, path):
+    def save_image(self,image: cv2.typing.MatLike, path):
         cv2.imwrite(path, image)
 
-    def get_mask_by_channel(self,image_path, channel):
+    def get_mask_by_channel(self,image: cv2.typing.MatLike, channel) -> cv2.typing.MatLike:
 
-        # Carregar a imagem
-        image = cv2.imread(image_path)
-        
         # Separar os canais R, G, B
         channels = cv2.split(image)
 
@@ -87,10 +89,10 @@ class FilteringSegmentation(ImageFilters):
 
         return _mask_inverted
     
-    def get_height_by_channel(self,edited_image, channel, normal_image):
+    def get_highlights_by_channel(self,edited_image: cv2.typing.MatLike, channel) -> cv2.typing.MatLike:
        
         channels = cv2.split(edited_image)
-        image_transform = super().apply_brightness_contrast(channels[channel], -40, 1.2)
+        image_transform = super().apply_brightness_contrast(channels[channel], -80, 1.2)
         image_transform = super().apply_curves(image_transform, np.array([[0,0], [58,136], [62, 177], [135, 85], [139, 154]])
 )
         image_transform = super().level_image_numpy(image_transform, 33, 52, 1.72)
@@ -105,13 +107,13 @@ class FilteringSegmentation(ImageFilters):
         plt.imshow(cv2.cvtColor(masked_image, cv2.COLOR_BGR2RGB))
         plt.show()
 
-    def remuve_background(self,image_path):
-        image = cv2.imread(image_path)
-        target_image = cv2.bitwise_and(image, self.get_mask_by_channel(image_path, self.R))
+    def remuve_background(self,image: cv2.typing.MatLike) -> cv2.typing.MatLike:
+        target_image = cv2.bitwise_and(image, self.get_mask_by_channel(image, self.choice_channel(image)))
         return target_image
 
-    def hailht_extractor(self, image_path):
+    def hailht_extractor(self, image_path: str) -> dict: # Anasilzar com mais calma
         image = cv2.imread(image_path)
+        
 
         # Analisar a densidade de cor da imagem por canal para pegar o que há mais brilho.
         channels_mean = self.color_density_mean(image)
@@ -128,13 +130,14 @@ class FilteringSegmentation(ImageFilters):
         }
         channels[channel_hailht]
 
-        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image_path, self.B))
-        hailhts = self.get_height_by_channel(masked_image, channels[channel_hailht], image)
-        self.draw_rectangle(image,hailhts)
+        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image, self.choice_channel(image)))
+        hailhts = self.get_highlights_by_channel(masked_image, channels[channel_hailht])
+        self.draw_rectangle_and_plot(image,hailhts)
 
+        channels_mean['counted_trees'] = self.count
         return channels_mean
         
-    def draw_rectangle(self,normal_image, image_transform):
+    def draw_rectangle_and_plot(self,normal_image: cv2.typing.MatLike, image_transform: cv2.typing.MatLike):
         if len(image_transform.shape) == 3:
             image_transform = cv2.cvtColor(image_transform, cv2.COLOR_BGR2GRAY)
 
@@ -143,7 +146,7 @@ class FilteringSegmentation(ImageFilters):
         labeled_array, num_features = ndi.label(image_transform, structure=np.ones((3, 3)))
         
         print(f'Número de componentes conectados: {num_features}')
-        
+        self.count = num_features
         # Encontrar os limites de cada segmento
         for label in range(1, num_features + 1):
             # Achar os pixels que pertencem ao segmento
@@ -155,22 +158,69 @@ class FilteringSegmentation(ImageFilters):
             # Para cada contorno, desenhar um retângulo em torno do segmento
             for contour in contours:
                 x, y, w, h = cv2.boundingRect(contour)
-                cv2.rectangle(normal_image, (x, y), (x + w, y + h), (0, 0, 255), 2)  # ! Restringir por area minima e maxima !
+                cv2.rectangle(normal_image, (x, y), (x + w, y + h), (0, 0, 255), 1)  # ! Restringir por area minima e maxima !
+                
+
         
         # Mostrar a imagem original com os quadrados vermelhos
-        self.plot_images(normal_image, f"Numero de segmentos encontrados {num_features}", 1, "gray", 1, 1)
+        self.plot_images(normal_image, f"Numero de segmentos encontrados {num_features}", 1, "gray", 2, 1)
+        self.plot_images(image_transform, f"Numero de segmentos encontrados", 2, "gray", 2, 1)
         plt.show()
 
-if __name__ == "__main__":
-    pipeline = FilteringSegmentation()
-    # for filename in os.listdir("dataset"):
-    #     if filename.endswith(".jpg") or filename.endswith(".jpeg") or filename.endswith(".png"):
-    #         image_path = os.path.join("dataset", filename)
-    #         print(f'{filename} _ {pipeline.hailht_extractor(image_path)} \n')
-    teste = "dataset/train/frame_0000.jpg"
-    pipeline.remuve_background_and_plot(teste)
-    #pipeline.hailht_extractor("dataset/train/08.png")
-    image = cv2.imread(teste)
-    pipeline.choice_channel(image)
+    def draw_rectangle(self,normal_image: cv2.typing.MatLike, image_transform: cv2.typing.MatLike):
+            if len(image_transform.shape) == 3:
+                image_transform = cv2.cvtColor(image_transform, cv2.COLOR_BGR2GRAY)
 
+
+            print(f'shape: {image_transform.shape}')
+            labeled_array, num_features = ndi.label(image_transform, structure=np.ones((3, 3)))
+            
+            print(f'Número de componentes conectados: {num_features}')
+            
+            # Encontrar os limites de cada segmento
+            for label in range(1, num_features + 1):
+                # Achar os pixels que pertencem ao segmento
+                segment_mask = (labeled_array == label).astype(np.uint8)
+                
+                # Encontrar os contornos do segmento
+                contours, _ = cv2.findContours(segment_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                
+                # Para cada contorno, desenhar um retângulo em torno do segmento
+                for contour in contours:
+                    x, y, w, h = cv2.boundingRect(contour)
+                    cv2.rectangle(normal_image, (x, y), (x + w, y + h), (0, 0, 255), 1)  # ! Restringir por area minima e maxima !
+            return normal_image
+
+    def get_texture_mask(self, image: cv2.typing.MatLike, kernel_size=3, threshold_value=100):
+        """
+        Gera uma máscara binária a partir de uma imagem, aplicando um filtro de suavização 
+        e usando o gradiente de magnitude.
+        
+        Parâmetros:
+            image (cv2 image): imagem.
+            kernel_size (int): Tamanho do kernel para o filtro de suavização (default: 9).
+            threshold_value (int): Valor de limiar para a geração da máscara (default: 100).
+        
+        Retorna:
+            mask (numpy array): Máscara binária gerada a partir da imagem suavizada.
+        """
+        
+        # Calcular gradiente (derivada) da imagem
+        sobel_x = ndi.sobel(image, axis=0)
+        sobel_y = ndi.sobel(image, axis=1)
+        magnitude = np.hypot(sobel_x, sobel_y)
+
+        # Normalizar a magnitude para o intervalo [0, 255] e converter para uint8
+        magnitude = np.uint8(255 * (magnitude / np.max(magnitude)))
+
+        # Criar um kernel nxn onde todos os valores são 1/(kernel_size^2)
+        kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size)
+
+        # Aplicar o filtro de média
+        smoothed_image = cv2.filter2D(magnitude, -1, kernel)
+
+        # Aplicar um limiar (threshold) para criar uma máscara binária
+        _, mask = cv2.threshold(smoothed_image, threshold_value, 255, cv2.THRESH_BINARY)
+
+        return mask
 

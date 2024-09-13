@@ -47,7 +47,7 @@ class FilteringSegmentation(ImageFilters):
         channels = cv2.split(image)
 
         # Aplicar a máscara à imagem original
-        mask = self.get_mask_by_channel(image_path, self.choice_channel(image))
+        mask = self.get_mask_by_channel(image, self.choice_channel(image))
         masked_image = cv2.bitwise_and(mask_1, mask)
 
 
@@ -222,25 +222,26 @@ class FilteringSegmentation(ImageFilters):
 
         return mask
 
-
+    def trash():
+        # cria uma pasta chamada "output" no mesmo diretório
+        # os.makedirs('output/tst',exist_ok=True)
+        #pipeline.hailht_extractor(teste)
+        # image = cv2.imread(teste)
+        # pipeline.save_image(pipeline.remuve_background(image),'output/tst/01.png')
+        # mask_image = pipeline.get_mask_by_channel(image, pipeline.choice_channel(image))
+        # pipeline.save_image(mask_image,'output/tst/02.png')
+        # hailht = pipeline.get_highlights_by_channel(cv2.bitwise_and(image, mask_image),0)
+        # pipeline.save_image(hailht,'output/tst/03.png')
+        # pipeline.save_image(pipeline.draw_rectangle(image,hailht),'output/tst/04.png')
+        # image_transform = cv2.imread("dataset/train/tst_alpha.png")
+        # pipeline.draw_rectangle(_and_plotimage,image_transform)
+        #pipeline.choice_channel(image)
+        pass
 
 if __name__ == "__main__":
     pipeline = FilteringSegmentation()
-    teste = "dataset/train/usp_02.png"
-    # cria uma pasta chamada "output" no mesmo diretório
-    os.makedirs('output/usp',exist_ok=True)
-    #pipeline.hailht_extractor(teste)
-    image = cv2.imread(teste)
-    pipeline.save_image(pipeline.remuve_background(image),'output/usp/01.png')
-    mask_image = pipeline.get_mask_by_channel(image, pipeline.choice_channel(image))
-    pipeline.save_image(mask_image,'output/usp/02.png')
-    hailht = pipeline.get_highlights_by_channel(cv2.bitwise_and(image, mask_image),0)
-    pipeline.save_image(hailht,'output/usp/03.png')
-    pipeline.save_image(pipeline.draw_rectangle(image,hailht),'output/usp/04.png')
-    # image_transform = cv2.imread("dataset/train/tst_alpha.png")
-    # pipeline.draw_rectangle(_and_plotimage,image_transform)
-    #pipeline.remuve_background_and_plot(teste)
-    #pipeline.choice_channel(image)
+    teste = "dataset/train/02.png"
+    pipeline.remuve_background_and_plot(teste)
 
 
 # Remuve Background

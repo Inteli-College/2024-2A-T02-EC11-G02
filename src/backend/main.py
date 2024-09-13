@@ -26,4 +26,4 @@ app.include_router(modelVersion.router)
 
 if "__main__" == __name__:
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, debug=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
