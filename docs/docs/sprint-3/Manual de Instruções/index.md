@@ -1,5 +1,5 @@
 ---
-title: Desenvolvimento Back-End
+title: Manual de Implementação do Projeto
 sidebar_position: 2
 ---
 
