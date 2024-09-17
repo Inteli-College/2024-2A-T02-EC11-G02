@@ -1,10 +1,12 @@
 import cv2
+import matplotlib
 import numpy as np
 import scipy.ndimage as ndi
 import matplotlib.pyplot as plt
 from tools_image import ImageFilters
 import os
 
+matplotlib.use('TkAgg')
 
 class FilteringSegmentation(ImageFilters):
     def __init__(self):
@@ -31,7 +33,7 @@ class FilteringSegmentation(ImageFilters):
 
         return choice
 
-    def plot_images(self,image: cv2.typing.MatLike, title, position, cmap=None, nrows=2, ncols=3):
+    def plot_images(self,image: cv2.typing.MatLike, title="none", position=1, cmap=None, nrows=2, ncols=3):
         plt.subplot(nrows, ncols, position)
         plt.title(title)
         plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cmap=cmap)
@@ -240,8 +242,12 @@ class FilteringSegmentation(ImageFilters):
 
 if __name__ == "__main__":
     pipeline = FilteringSegmentation()
-    teste = "dataset/train/02.png"
-    pipeline.remuve_background_and_plot(teste)
+    teste = "dataset/train/BL_100m_01.png"
+    # pipeline.remuve_background_and_plot(teste)
+    image = cv2.imread(teste)
+    imagem_processada = pipeline.remuve_background(image)
+    pipeline.plot_images(imagem_processada, nrows=1, ncols=1)
+    plt.show()
 
 
 # Remuve Background
