@@ -28,3 +28,14 @@ Na segunda sprint do projeto, após uma melhor compreensão acerca das expectati
     style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGOq_xx3ew&#x2F;CoKnZH9W0i4J-JkrzlFbrQ&#x2F;view?embed">
 </iframe>
+
+## Sprint III
+
+A terceira sprint do projeto foi dedicada ao refinamento do modelo de visão computacional a ser utilizado na solução, bem como à continuidade do desenvolvimento do back-end e das telas da interface gráfica destinada ao parceiro. No que concerne ao modelo, a técnica de filtragem e segmentação empregada passou por uma fase de otimização, a fim de que a contagem de árvores para imagens de drone e satélite se tornasse mais precisa. Além disso, o modelo pré-treinado do Deep Forest permaneceu como uma opção válida para outros tipos de imagem. O sistema embarcado também obteve progresso, uma vez que foi configurado o módulo da câmera responsável pela captura de imagens. A entrega da sprint também conta com uma matriz de riscos e oportunidades.
+
+[Link da Apresentação](https://www.canva.com/design/DAGQSCSuBtE/6tyOzo8CLOO-KwYEjYuZBQ/view?utm_content=DAGQSCSuBtE&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+<iframe loading="lazy"
+    style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGQSCSuBtE&#x2F;k_o24i_FEs8oyepbN0qYOw&#x2F;view?embed">
+</iframe>
