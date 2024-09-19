@@ -11,7 +11,7 @@ const options = [
 export default function UploadPage() {
   return (
     <div>
-      <div className="flex justify-evenly p-14">
+      <div className="flex my-14 justify-evenly px-14 py-8">
         <div className="w-1/3">
           <h1 className="font-bold text-[#575EA6]">Teste de modelo</h1>
           <p>
