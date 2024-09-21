@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 import colorsys
+
+
+
+
 
 class ImageFilters:
     def __init__(self):
@@ -141,47 +144,3 @@ class ImageFilters:
         """
         return cv2.filter2D(image, -1, kernel)
         
-def main():
-        
-    a = ImageFilters()
-
-    image = cv2.imread('dataset/04.png')  # Carrega a imagem
-
-
-    # Aplica as funçãos para ajustar a imagem
-    rgb_filter = [120,60,0]
-    curve_points = np.array([[0, 0], [105, 92], [146, 247], [146, 247], [255, 255], [255, 255], [255, 255]])
-
-    image_adjusted_color = a.apply_color(image, rgb_filter)
-    imagem_cinza = cv2.cvtColor(image_adjusted_color, cv2.COLOR_BGR2GRAY)
-    image_adjusted_curves = a.apply_curves(image, curve_points)
-
-
-    # Ajusta os valores para o intervalo de 0 a 255 e converte para uint8
-    image_adjusted = np.clip(image_adjusted_curves, 0, 255).astype(np.uint8)
-
-
-    # Exibe a imagem original e a ajustada
-    plt.figure(figsize=(10, 5))
-    plt.subplot(1, 2, 1)
-    plt.title("Original")
-    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.subplot(1, 2, 2)
-    plt.title("Ajustada")
-    plt.imshow(cv2.cvtColor(image_adjusted, cv2.COLOR_BGR2RGB))
-    plt.show()
-
-if __name__ == '__main__':
-    ImgFilters = ImageFilters()
-
-    image = cv2.imread('dataset/04.png')  # Carrega a imagem
-    img = ImgFilters.apply_brightness_contrast(image, 100, 1.5)
-    
-    plt.figure(figsize=(10, 5))
-    plt.subplot(1, 2, 1)
-    plt.title("Original")
-    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.subplot(1, 2, 2)
-    plt.title("Ajustada")
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    plt.show()
