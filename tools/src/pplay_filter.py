@@ -160,7 +160,10 @@ class FilteringSegmentation(ImageFilters):
 
         return channels_mean
         
-    def draw_rectangle_and_plot(self,normal_image: cv2.typing.MatLike, image_transform: cv2.typing.MatLike):
+    def draw_rectangle_and_plot(self,normal_path: str, transform_path: str):
+        normal_image =  cv2.imread(normal_path)
+        image_transform =  cv2.imread(transform_path)
+        
         if len(image_transform.shape) == 3:
             image_transform = cv2.cvtColor(image_transform, cv2.COLOR_BGR2GRAY)
 
@@ -258,9 +261,12 @@ class FilteringSegmentation(ImageFilters):
 
 if __name__ == '__main__':
     image_path = 'dataset/test/01_test.png'
+    ideal_alpha = "dataset/test/01_test_count.png"
+    _alpha = "dataset/test/01_tst_alpha.png"
     filter_segmentation = FilteringSegmentation()
-    filter_segmentation.remove_background_and_plot(image_path)
-    image = cv2.imread(image_path)
+    #filter_segmentation.remove_background_and_plot(image_path)
+    filter_segmentation.draw_rectangle_and_plot(image_path, _alpha)
+    #image = cv2.imread(image_path)
     #filter_segmentation.hailht_extractor(image_path)
     # target = cv2.imread("dataset/test/02_test_count.png")
     # filter_segmentation.draw_rectangle_and_plot(image,target)
