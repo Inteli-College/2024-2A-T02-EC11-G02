@@ -8,6 +8,7 @@ import zipfile
 import io
 from firebase_admin import storage
 from PIL import Image
+import cv2
 
 router = APIRouter()
 
@@ -108,21 +109,20 @@ async def upload_and_process(file: UploadFile = File(...)):
     
                         print("Starting image processing...")
                         pipeline = FilteringSegmentation()
-                        processed_image = pipeline.hailht_extractor(tmp_path)
+                        processed_image = await pipeline.segment_image_async(tmp_path)
                         print("Image processed successfully.")
 
-                        # # Verifique o tipo de processed_image
-                        # if isinstance(processed_image, bytes):
-                        #     processed_image_bytes = processed_image
-                        # else:
-                        #     processed_image_bytes = io.BytesIO()
-                        #     processed_image.save(processed_image_bytes, format='PNG')
-                        #     processed_image = processed_image_bytes.getvalue()
+                        # Converte a imagem processada para o formato PNG em memória
+                        success, encoded_image = cv2.imencode('.png', processed_image)
+                        if not success:
+                            raise HTTPException(status_code=500, detail="Falha ao codificar a imagem processada.")
+
+                        processed_image_bytes = encoded_image.tobytes()
 
                         # Faz o upload da imagem processada para Firebase Storage
                         processed_blob_name = f"processada/{file_name}"
                         processed_blob = bucket.blob(processed_blob_name)
-                        processed_blob.upload_from_string(processed_image)
+                        processed_blob.upload_from_string(processed_image_bytes, content_type='image/png')
                         processed_blob.make_public()  # Torna a URL pública
                         processed_urls.append(processed_blob.public_url)
 
