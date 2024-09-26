@@ -34,9 +34,52 @@ async def modelVersion(file: UploadFile = File(...)) :
             
             tmp_path = tmp.name
         
-
-
         return FileResponse(tmp_path, filename=os.path.basename(tmp_path))
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+@router.post("/firebase_url")
+async def model_version(file: UploadFile = File(...)):
+    try:
+        # Crie um arquivo temporário para armazenar a imagem enviada
+        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            shutil.copyfileobj(file.file, tmp)
+            tmp_path = tmp.name
+        
+        # Inicializa o pipeline de processamento e processa a imagem
+        pipeline = FilteringSegmentation()
+        imagem_processada = await pipeline.segment_image_async(tmp_path)
+
+        # Exclua o arquivo temporário original após o processamento
+        os.remove(tmp_path)
+
+        # Crie um novo arquivo temporário para salvar a imagem processada
+        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            # Converte o resultado para uma imagem do PIL e salva no arquivo temporário
+            imagem_pil = Image.fromarray(imagem_processada)
+            imagem_pil.save(tmp.name)
+            
+            processed_tmp_path = tmp.name
+
+        # Carregar a imagem processada no Firebase Storage
+        bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
+        processed_blob_name = f"processed/{os.path.basename(processed_tmp_path)}"
+        processed_blob = bucket.blob(processed_blob_name)
+
+        # Codifique a imagem processada como PNG e faça o upload
+        with open(processed_tmp_path, "rb") as processed_file:
+            processed_blob.upload_from_file(processed_file, content_type='image/png')
+
+        # Torne a URL da imagem pública
+        processed_blob.make_public()
+        processed_image_url = processed_blob.public_url
+
+        # Exclua o arquivo temporário da imagem processada
+        os.remove(processed_tmp_path)
+
+        # Retorne a URL pública da imagem processada
+        return {"processed_image_url": processed_image_url}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
