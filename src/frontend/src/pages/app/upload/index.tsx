@@ -1,4 +1,6 @@
 import Select from "react-select";
+import { useState } from "react";
+import ReportComponent from "../../../components/Report";
 
 const options = [
   { value: "brasil-sudeste", label: "Brasil - Sudeste" },
@@ -9,9 +11,58 @@ const options = [
 ];
 
 export default function UploadPage() {
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); 
+  const [processedImage, setProcessedImage] = useState<string | null>(null);
+  const [processedComplete, setProcessedComplete] = useState<boolean>(false);
+
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null ){
+      return;
+    }
+
+    const file = e.target.files[0];
+
+    if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+      setSelectedImage(file);
+    } else {
+      alert('Please select a valid image file (PNG or JPEG)');
+    }
+  };
+
+  const handleSubmit = async () => {
+    setProcessedComplete(true);
+    if (!selectedImage) {
+      alert('Please select an image first.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+
+    try {
+      const response = await fetch('http://0.0.0.0:8000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert('Ok');
+        setProcessedComplete(true);
+        setProcessedImage(data.processedImageUrl);
+      } else {
+        alert('Failed to upload image.');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
   return (
     <div>
-      <div className="flex justify-evenly p-14">
+      <main className="flex my-14 justify-evenly px-14 py-8">
         <div className="w-1/3">
           <h1 className="font-bold text-[#575EA6]">Teste de modelo</h1>
           <p>
@@ -20,27 +71,57 @@ export default function UploadPage() {
             abundância.
           </p>
         </div>
-        <div className="flex flex-col w-1/2 ">
-          <div className="flex">
-            <div>
-              <label className="font-bold">Escolha a região</label>
-              <Select options={options} className="mb-6" />
-              <label htmlFor="" className="font-bold">
-                Upload files
-              </label>
-              <p>
-                Somente arquivos .jpg e .png. Tamanho máximo de arquivo de 5 MB.
-              </p>
-              <div className="border-dashed flex justify-center items-center border-blue-500 border rounded-lg w-full h-20">
-                Carregue uma imagem
+        <div className="flex flex-col w-1/2">
+          <div className="flex gap-x-10">
+            <form >
+              <div>
+                <label className="font-bold">Escolha a região</label>
+                <Select options={options} className="mb-6" />
+                <label htmlFor="file-upload" className="font-bold">
+                  Upload files
+                </label>
+                <p>
+                  Somente arquivos .jpg e .png. Tamanho máximo de arquivo de 5 MB.
+                </p>
+                <div className="border-dashed flex justify-center items-center border-blue-500 border rounded-lg w-full h-20">
+                  <input
+                    id="file-upload"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                  <label htmlFor="file-upload" className="cursor-pointer">
+                    Carregue uma imagem
+                  </label>
+                </div>
               </div>
-              {/* <input type="file" /> */}
+            </form>
+            <div className="w-full h-64 bg-black ml-2 rounded-lg flex justify-center items-center">
+              {processedImage ? (
+                <img
+                  src={processedImage}
+                  alt="Processed"
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+              ) : (
+                <p className="text-white">Pré-visualização da imagem</p>
+              )}
             </div>
-            <div className="w-full h-64 bg-black ml-2 rounded-lg"></div>
+
           </div>
-          <button type="button" className=" w-28 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Enviar</button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="w-28 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Enviar
+          </button>
         </div>
-      </div>
+      </main>
+      <section>
+          {processedComplete && <ReportComponent value={90} title="io" />}
+        </section>
     </div>
   );
 }

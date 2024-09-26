@@ -1,5 +1,6 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException
-from .code.apply_filter import FilteringSegmentation
+from .tools.filtering_segmentation import FilteringSegmentation
+from fastapi.responses import FileResponse
 import shutil
 import os
 from tempfile import NamedTemporaryFile
@@ -8,11 +9,10 @@ import io
 from firebase_admin import storage
 from PIL import Image
 
-
 router = APIRouter()
 
 @router.post("/modelversion")
-async def modelVersion(file: UploadFile = File(...)):
+async def modelVersion(file: UploadFile = File(...)) :
     try:
         # Create a temporary file to store the uploaded image
         with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
@@ -21,12 +21,21 @@ async def modelVersion(file: UploadFile = File(...)):
         
         # Initialize the pipeline and pass the temporary file path to the method
         pipeline = FilteringSegmentation()
-        imagem = pipeline.hailht_extractor(tmp_path)
-        
-        # Optionally, delete the temporary file after processing
+        imagem = await pipeline.segment_image_async(tmp_path)
+
+        # Opcionalmente, exclua o arquivo temporário após o processamento
         os.remove(tmp_path)
+
+        # Cria um novo arquivo temporário para salvar a imagem processada
+        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            Imagem = Image.fromarray(imagem)
+            Imagem.save(tmp.name)
+            
+            tmp_path = tmp.name
         
-        return imagem
+
+
+        return FileResponse(tmp_path, filename=os.path.basename(tmp_path))
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")

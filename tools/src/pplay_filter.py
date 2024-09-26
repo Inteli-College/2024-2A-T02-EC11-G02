@@ -12,11 +12,32 @@ class FilteringSegmentation(ImageFilters):
         self.image = None
         self.mask = None
         self.masked_image = None
+        
         self.R = 2
         self.G = 1
         self.B = 0
+        self.rgb = [
+            'blue',
+            'green',
+            'red'
+        ]
 
-    def choice_channel(self, image: cv2.typing.MatLike) -> int:
+    def get_brightness(self,imagem: cv2.typing.MatLike) -> float:
+        
+        # Se a imagem estiver colorida, converta para escala de cinza
+        if len(imagem.shape) == 3:
+            img = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+        else:
+            img = imagem
+        # Calcular a média da intensidade de cada pixel
+        media = np.mean(img)
+
+        y = 15435/89 - 95*media/89
+
+        return y 
+        
+
+    def choice_channel(self, image) -> int:
         B, G, R = cv2.split(image)
 
         trashold = 40
@@ -36,19 +57,21 @@ class FilteringSegmentation(ImageFilters):
         plt.title(title)
         plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cmap=cmap)
 
-    def remuve_background_and_plot(self,image_path):
+    def remove_background_and_plot(self,image_path):
         # Carregar a imagem
         image = cv2.imread(image_path)
-        mask_1 = self.get_texture_mask(image, 1, 100)
-        mask_1 = cv2.bitwise_and(image, mask_1)
+        choice = self.choice_channel(image)
 
 
         # Separar os canais R, G, B
         channels = cv2.split(image)
 
+        
         # Aplicar a máscara à imagem original
-        mask = self.get_mask_by_channel(image, self.choice_channel(image))
-        masked_image = cv2.bitwise_and(mask_1, mask)
+        mask = self.get_mask_by_channel(image, choice)
+        masked_image = cv2.bitwise_and(image, mask)
+        mask_1 = self.get_texture_mask(masked_image, 1, 100)
+        mask_1 = cv2.bitwise_and(masked_image, mask_1)
 
 
 
@@ -61,25 +84,25 @@ class FilteringSegmentation(ImageFilters):
         self.plot_images(channels[1], "Canal G", 2,"gray")
         self.plot_images(channels[2], "Canal R", 1,"gray")
         self.plot_images(image, "Original", 4,)
-        self.plot_images(mask, "mask", 5)
-        self.plot_images(masked_image, "Final", 6)
-        
-        # Mostrar as imagens
+        self.plot_images(mask, f"mask - {self.rgb[choice]}", 5)
+        self.plot_images(mask_1, "Final", 6)
         plt.show()
 
     def save_image(self,image: cv2.typing.MatLike, path):
         cv2.imwrite(path, image)
 
     def get_mask_by_channel(self,image: cv2.typing.MatLike, channel) -> cv2.typing.MatLike:
-
+        brightness_value = self.get_brightness(image)
+        print(f'Brightness: {brightness_value}')
         # Separar os canais R, G, B
         channels = cv2.split(image)
 
         # Aplicar as transformações no canal R
-        image_transform = super().apply_brightness_contrast(channels[channel], 40, 1.5)
+        image_transform = super().apply_brightness_contrast(channels[channel], brightness_value, 1.2)
+        # ! Contar a proporção de pixel brancos e pretos !
         image_transform = super().apply_curves(image_transform, np.array([[0, 0], [105, 92], [146, 247], [255, 255]]))
         image_transform = super().apply_kernal_bluer(image_transform, 5)
-        image_transform = super().level_image_numpy(image_transform, 200, 255, 9.9)
+        image_transform = super().level_image_numpy(image_transform, 150, 255, 9.9)
         
         # Normalizar a máscara para ter valores entre 0 e 255
         _mask = cv2.normalize(image_transform, None, 0, 255, cv2.NORM_MINMAX)
@@ -91,23 +114,23 @@ class FilteringSegmentation(ImageFilters):
     def get_highlights_by_channel(self,edited_image: cv2.typing.MatLike, channel) -> cv2.typing.MatLike:
        
         channels = cv2.split(edited_image)
-        image_transform = super().apply_brightness_contrast(channels[channel], -80, 1.2)
-        image_transform = super().apply_curves(image_transform, np.array([[0,0], [58,136], [62, 177], [135, 85], [139, 154]])
-)
-        image_transform = super().level_image_numpy(image_transform, 33, 52, 1.72)
 
-        return image_transform
+        #image_transform = super().apply_brightness_contrast(channels[channel], -80, 1.2)
+        #image_transform = super().apply_curves(channels[channel], np.array([[0,0], [58,136], [62, 177], [135, 85], [139, 154]]))
+        #image_transform = super().level_image_numpy(channels[channel], 33, 52, 1.72)
+
+        return channels[channel]
 
     def segment_and_plot(self,image_path):
         image = cv2.imread(image_path)
         image = super().apply_color(image,[ 0, 0, 100 ])
-        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image_path, self.R))
+        masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, self.B)))
         plt.figure(figsize=(10, 10))
         plt.imshow(cv2.cvtColor(masked_image, cv2.COLOR_BGR2RGB))
         plt.show()
 
-    def remuve_background(self,image: cv2.typing.MatLike) -> cv2.typing.MatLike:
-        target_image = cv2.bitwise_and(image, self.get_mask_by_channel(image, self.choice_channel(image)))
+    def remove_background(self,image: cv2.typing.MatLike) -> cv2.typing.MatLike:
+        target_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, self.choice_channel(image))))
         return target_image
 
     def hailht_extractor(self, image_path: str) -> dict: # Anasilzar com mais calma
@@ -128,14 +151,19 @@ class FilteringSegmentation(ImageFilters):
             'red': self.R
         }
         channels[channel_hailht]
+        print(f'Canal escolhido: {channels[channel_hailht]}')
 
-        masked_image = cv2.bitwise_and(image, self.get_mask_by_channel(image, self.choice_channel(image)))
+
+        masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, self.choice_channel(image))))
         hailhts = self.get_highlights_by_channel(masked_image, channels[channel_hailht])
         self.draw_rectangle_and_plot(image,hailhts)
 
         return channels_mean
         
-    def draw_rectangle_and_plot(self,normal_image: cv2.typing.MatLike, image_transform: cv2.typing.MatLike):
+    def draw_rectangle_and_plot(self,normal_path: str, transform_path: str):
+        normal_image =  cv2.imread(normal_path)
+        image_transform =  cv2.imread(transform_path)
+        
         if len(image_transform.shape) == 3:
             image_transform = cv2.cvtColor(image_transform, cv2.COLOR_BGR2GRAY)
 
@@ -189,7 +217,7 @@ class FilteringSegmentation(ImageFilters):
                     cv2.rectangle(normal_image, (x, y), (x + w, y + h), (0, 0, 255), 1)  # ! Restringir por area minima e maxima !
             return normal_image
 
-    def get_texture_mask(self, image: cv2.typing.MatLike, kernel_size=3, threshold_value=100):
+    def get_texture_mask(self, image: cv2.typing.MatLike, kernel_size=3, threshold_value=100) -> cv2.typing.MatLike:
         """
         Gera uma máscara binária a partir de uma imagem, aplicando um filtro de suavização 
         e usando o gradiente de magnitude.
@@ -222,28 +250,27 @@ class FilteringSegmentation(ImageFilters):
 
         return mask
 
-    def trash():
-        # cria uma pasta chamada "output" no mesmo diretório
-        # os.makedirs('output/tst',exist_ok=True)
-        #pipeline.hailht_extractor(teste)
-        # image = cv2.imread(teste)
-        # pipeline.save_image(pipeline.remuve_background(image),'output/tst/01.png')
-        # mask_image = pipeline.get_mask_by_channel(image, pipeline.choice_channel(image))
-        # pipeline.save_image(mask_image,'output/tst/02.png')
-        # hailht = pipeline.get_highlights_by_channel(cv2.bitwise_and(image, mask_image),0)
-        # pipeline.save_image(hailht,'output/tst/03.png')
-        # pipeline.save_image(pipeline.draw_rectangle(image,hailht),'output/tst/04.png')
-        # image_transform = cv2.imread("dataset/train/tst_alpha.png")
-        # pipeline.draw_rectangle(_and_plotimage,image_transform)
-        #pipeline.choice_channel(image)
-        pass
-
-if __name__ == "__main__":
-    pipeline = FilteringSegmentation()
-    teste = "dataset/train/02.png"
-    pipeline.remuve_background_and_plot(teste)
+    def segment_image(self,image_path: str) -> cv2.typing.MatLike:
+        image = cv2.imread(image_path)
+        choice = self.choice_channel(image)
+        masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, choice)))
+        highlights = self.get_highlights_by_channel(masked_image, self.G)
+        image_segmented = self.draw_rectangle(image,highlights)
+        return image_segmented
 
 
-# Remuve Background
-# Amplify Highlights
-# Segment Count
+if __name__ == '__main__':
+    image_path = 'dataset/test/01_test.png'
+    ideal_alpha = "dataset/test/01_test_count.png"
+    _alpha = "dataset/test/01_tst_alpha.png"
+    filter_segmentation = FilteringSegmentation()
+    #filter_segmentation.remove_background_and_plot(image_path)
+    filter_segmentation.draw_rectangle_and_plot(image_path, _alpha)
+    #image = cv2.imread(image_path)
+    #filter_segmentation.hailht_extractor(image_path)
+    # target = cv2.imread("dataset/test/02_test_count.png")
+    # filter_segmentation.draw_rectangle_and_plot(image,target)
+
+
+
+#Fazer a media dos valores por quadrante para equalizar os tons com base nos vizinhos mais proximos
