@@ -1,3 +1,8 @@
+---
+title: Análise Financeira
+sidebar_position: 1
+---
+
 **1. Desenvolvimento do Modelo de IA (P&D)**
 - Estimativa de Custo: Aproximadamente R$ 40.000 - R$ 50.000
 - Detalhamento:

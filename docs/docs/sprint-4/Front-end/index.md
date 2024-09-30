@@ -1,4 +1,9 @@
-# Frontend: Interface do Usuário
+---
+title: Front-end
+sidebar_position: 2
+---
+
+# Front-end: Interface do Usuário
 
 Este projeto trata-se de um sistema de processamento de imagens de árvores em áreas florestais. O frontend, como parte da aplicação, é responsável por receber as imagens de sensores IoT ou através de uploads feitos pelos usuários, e enviá-las ao backend para processamento. Após o processamento, o sistema retorna a imagem segmentada e informa a contagem de árvores identificadas. Essas informações são, então, adicionadas a um histórico para posterior consulta, incluindo métricas como número de árvores e áreas cobertas por vegetação.
 
