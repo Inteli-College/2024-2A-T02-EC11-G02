@@ -39,3 +39,14 @@ A terceira sprint do projeto foi dedicada ao refinamento do modelo de visão com
     style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGQSCSuBtE&#x2F;k_o24i_FEs8oyepbN0qYOw&#x2F;view?embed">
 </iframe>
+
+## Sprint IV
+
+Na quarta sprint do projeto, foi produzida uma análise financeira, a fim de que fosse possível estabelecer uma previsão do investimento necessário para a implementação da solução na rotina da empresa. Além disso, a equipe de desenvolvimento focou em refinar o pipeline de pré-processamento das imagens submetidas ao modelo de visão computacional. O back-end da aplicação foi finalizado e as telas do front-end foram refinadas, restando, para a próxima sprint, a integração completa entre os múltiplos componentes da solução.
+
+[Link da Apresentação](https://www.canva.com/design/DAGR3VpNoA8/awAvnATskHF7mnkez3gPhg/view?utm_content=DAGR3VpNoA8&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+<iframe loading="lazy"
+    style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
+    src="https://www.canva.com/design/DAGR3VpNoA8/28rJrZwGOn3LgoOFcpyXqQ/view?embed">
+</iframe>
