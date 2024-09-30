@@ -1,6 +1,6 @@
 ---
 title: Testes do Modelo
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 O modelo de visão computacional desenvolvido aplica técnicas de filtragem e segmentação para analisar imagens de áreas florestais. Utilizando uma série de funções que empregam diferentes filtros, o objetivo é tornar possível a distinção precisa entre as árvores presentes nas imagens. O processo de análise segue as seguintes etapas:
