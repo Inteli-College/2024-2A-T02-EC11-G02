@@ -1,6 +1,6 @@
 ---
 title: Manual de Implementação do Projeto
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Manual de Implementação do Projeto: Contagem de Árvores com Visão Computacional
