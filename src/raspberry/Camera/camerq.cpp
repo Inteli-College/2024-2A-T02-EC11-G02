@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
         std::cout << "Pasta compactada com sucesso: " << zip_path << std::endl;
 
         // Envia o arquivo ZIP para o endpoint
-        std::string url = "http://exemplo.com/upload"; // Substitua pela URL do endpoint
+        std::string url = "http://exemplo.com/upload";
         if (upload_zip(zip_path, url)) {
             std::cout << "Arquivo enviado com sucesso para " << url << std::endl;
         } else {
