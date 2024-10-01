@@ -9,8 +9,13 @@ import io
 from firebase_admin import storage
 from PIL import Image
 import cv2
+from pymongo import MongoClient
 
 router = APIRouter()
+
+client = MongoClient("mongodb://root:example@localhost:27017")
+db = client["analise_ambiental"]
+collection = db["resultados_modelo"]
 
 @router.post("/modelversion")
 async def modelVersion(file: UploadFile = File(...)) :
@@ -87,6 +92,7 @@ async def model_version(file: UploadFile = File(...)):
 
 @router.post("/upload_and_process/")
 async def upload_and_process(file: UploadFile = File(...)):
+    pipeline = None
     try:
         # Referência ao bucket de storage
         bucket = storage.bucket()
@@ -133,7 +139,7 @@ async def upload_and_process(file: UploadFile = File(...)):
                     # Faz o upload da imagem original para Firebase Storage
                     original_blob_name = f"original/{file_name}"
                     original_blob = bucket.blob(original_blob_name)
-                    original_blob.upload_from_string(file_content)
+                    original_blob.upload_from_string(file_content, content_type='image/png')
                     original_blob.make_public()  # Torna a URL pública
                     original_urls.append(original_blob.public_url)
 
@@ -163,13 +169,28 @@ async def upload_and_process(file: UploadFile = File(...)):
                         processed_image_bytes = encoded_image.tobytes()
 
                         # Faz o upload da imagem processada para Firebase Storage
-                        processed_blob_name = f"processada/{file_name}"
+                        processed_blob_name = f"processed/{file_name}"
                         processed_blob = bucket.blob(processed_blob_name)
                         processed_blob.upload_from_string(processed_image_bytes, content_type='image/png')
                         processed_blob.make_public()  # Torna a URL pública
                         processed_urls.append(processed_blob.public_url)
 
                         print(f"Processed image uploaded: {processed_blob.public_url}")
+
+                        documento = {
+                            "modelo": "V1",
+                            "margem_de_erro": 25,  # Margem de erro em percentual
+                            "img": {
+                                "url_imagem_processada": processed_blob.public_url,
+                                "quantidade_de_arvores": pipeline.counted,
+                                "metros_quadrados_vegetacao": 5000
+                            }
+                        }
+
+                        # Inserir o documento na coleção
+                        resultado = collection.insert_one(documento)
+
+                        print(f"Documento inserido com ID: {resultado.inserted_id}")
 
                     except Exception as e:
                         print(f"Error during image processing: {str(e)}")
