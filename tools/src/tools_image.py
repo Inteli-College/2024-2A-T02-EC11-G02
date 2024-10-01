@@ -45,11 +45,45 @@ class ImageFilters:
     def apply_levels(image, levels):
         return 
     
-    def apply_brightness_contrast(self,image, brightness, contrast):
-        image = image.astype(np.float32)
-        image = image * contrast + brightness
-        image = np.clip(image, 0, 255).astype(np.uint8)
+    def apply_brightness_contrast(self, image, brightness, contrast):
+        # Escalar o brilho para o intervalo de -255 a 255
+        brightness = int((brightness - 0) * (255 - (-255)) / (510 - 0) + (-255))
+        
+        # Escalar o contraste para o intervalo de -127 a 127
+        contrast = int((contrast - 0) * (127 - (-127)) / (254 - 0) + (-127))
+
+        # Aplicar o brilho
+        if brightness != 0:
+            if brightness > 0:
+                shadow = brightness
+                max_value = 255
+            else:
+                shadow = 0
+                max_value = 255 + brightness
+            
+            alpha = (max_value - shadow) / 255.0 
+            gamma = shadow
+            image = cv2.addWeighted(image, alpha, image, 0, gamma)
+        
+        # Aplicar o contraste
+        if contrast != 0:
+            alpha = float(131 * (contrast + 127)) / (127 * (131 - contrast))
+            gamma = 127 * (1 - alpha)
+            image = cv2.addWeighted(image, alpha, image, 0, gamma)
+
+        # # Garantir que os valores estejam entre 0 e 255
+        # image = np.clip(image, 0, 255).astype(np.uint8)
+
+        # print(f"Brightness: {brightness}, Contrast: {contrast}")
+        # print(f"Alpha: {alpha}, Gamma: {gamma}")
+
+        # # Verificar se a imagem tem valores esperados
+        # print(f"Image min: {image.min()}, Image max: {image.max()}")
+
+        
         return image
+
+
     
     def apply_kernal_bluer(self,image,kernal_size):
         return cv2.blur(image,(kernal_size,kernal_size))
@@ -144,6 +178,9 @@ class ImageFilters:
         Espera uma imagem e um kernel e retorna a convolução.
         """
         return cv2.filter2D(image, -1, kernel)
+
+
+ 
         
 def main():
         

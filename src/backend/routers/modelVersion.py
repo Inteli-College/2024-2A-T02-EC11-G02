@@ -4,9 +4,6 @@ from fastapi.responses import FileResponse
 import shutil
 import os
 from tempfile import NamedTemporaryFile
-import zipfile
-import io
-from firebase_admin import storage
 from PIL import Image
 import cv2
 from pymongo import MongoClient

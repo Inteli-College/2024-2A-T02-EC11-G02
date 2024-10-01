@@ -1,4 +1,7 @@
-# Arquitetura do Projeto e Considerações sobre o Back-End
+---
+title: Arquitetura e Considerações sobre o Back-end
+sidebar_position: 2
+---
 
 ## Desafios na Implementação de Testes de Carga com Locust
 
