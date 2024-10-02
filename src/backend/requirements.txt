@@ -2,3 +2,8 @@ fastapi
 uvicorn
 firebase-admin
 pymongo
+opencv-python
+python-multipart
+scipy
+matplotlib
+python-dotenv

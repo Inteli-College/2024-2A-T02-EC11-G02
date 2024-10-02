@@ -1,13 +1,15 @@
-version: '2'
+version: '3'
 services:
-  mongo:
-  app:
-    build: .
+
+  backend:
+    build: ./backend
+    restart: on-failure
     ports:
       - "8000:8000"
     depends_on:
       - mongo
 
+  mongo:
     build: ./mongo
     restart: on-failure
     environment:
@@ -15,10 +17,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
-  logging:
-    build:
-      context: .
-      dockerfile: logging/Dockerfile
-    container_name: logging
-    ports:
-      - "8003:8003"
