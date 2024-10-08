@@ -30,7 +30,9 @@
 
 ## 📝 Descrição
 
-_To-do_
+O projeto foi realizado em parceria com a Abundance, uma Climate-Tech focada em impulsionar a restauração ambiental por meio do Abundance Token, do Ecossistema ESG e da Educação. A empresa tem como propósito a preservação de regiões florestais, por meio da tokenização dos ativos ambientais presentes nesse ecossistema. Cada árvore plantada pela Abundance está atrelada a uma representação digital por meio de um token registrado na Blockchain. Desse modo, busca-se contribuir para a transição rumo a uma economia sustentável.
+
+Um dos principais desafios enfrentados pela Abundance está relacionado ao atual processo de monitoramento das regiões florestais sob sua gestão. Um dado essencial, tanto para a empresa quanto para seus clientes, é a quantidade de árvores plantadas pela iniciativa, uma vez que isso reforça a transparência e a robustez do processo de monitoramento e controle de informações, o que é crucial para a obtenção de determinadas certificações. Dessa forma, foi concebida uma solução que utiliza um modelo de visão computacional para realizar a contagem de árvores, por meio de um sistema embarcado acoplável a drones capaz de capturar imagens das regiões de plantio da empresa. Por meio de uma aplicação robusta, o parceiro será capaz de submeter imagens de diferentes origens — tanto de drones, quanto de satélites — a um modelo que utiliza a técnica de filtragem e segmentação para contabilizar os ativos florestais presentes no local. Espera-se contribuir, portanto, para o aprimoramento do processo de contagem de árvores, até então realizado manualmente, de modo a reforçar a transparência de informações relacionadas ao principal ativo com o qual a Abundance trabalha.
 
 ## 📁 Estrutura de Pastas
 

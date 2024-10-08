@@ -102,9 +102,11 @@ int main(int argc, char** argv) {
         if (cv::waitKey(1) == 's') {
             std::string filename = folder_name + "/image_" + std::to_string(frameCount++) + ".jpg";
             cv::imwrite(filename, frame);
+            std::cerr << filename + " salvo com sucesso! " << std::endl;
         }
 
         if (cv::waitKey(1) == 'q') {
+            std::cerr << "Saindo..." << std::endl;
             break;
         }
     }
@@ -118,7 +120,7 @@ int main(int argc, char** argv) {
         std::cout << "Pasta compactada com sucesso: " << zip_path << std::endl;
 
         // Envia o arquivo ZIP para o endpoint
-        std::string url = "http://exemplo.com/upload";
+        std::string url = "http://10.128.0.83:8000/upload_and_process/";
         if (upload_zip(zip_path, url)) {
             std::cout << "Arquivo enviado com sucesso para " << url << std::endl;
         } else {
