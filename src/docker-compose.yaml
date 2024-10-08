@@ -13,7 +13,7 @@ services:
     environment:
       - MONGO_URI=mongodb://root:example@mongo:27017
       - MONGO_DB=mongo
-      - FIREBASE_STORAGE_BUCKET="grupo2-93568.appspot.com"
+      - FIREBASE_STORAGE_BUCKET=grupo2-93568.appspot.com
       - FIREBASE_KEY_PATH=/code/root/grupo2-93568-firebase-adminsdk-ck9m1-2cbbaaec91.json
 
 

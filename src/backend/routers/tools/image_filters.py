@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import colorsys
+import matplotlib.pyplot as plt
 
 
 
@@ -44,60 +44,84 @@ class ImageFilters:
     def apply_levels(image, levels):
         return 
     
-    def apply_brightness_contrast(self,image, brightness, contrast):
-        image = image.astype(np.float32)
-        image = image * contrast + brightness
-        image = np.clip(image, 0, 255).astype(np.uint8)
+    def apply_brightness_contrast(self, image, brightness, contrast):
+        # Escalar o brilho para o intervalo de -255 a 255
+        brightness = int((brightness - 0) * (255 - (-255)) / (510 - 0) + (-255))
+        
+        # Escalar o contraste para o intervalo de -127 a 127
+        contrast = int((contrast - 0) * (127 - (-127)) / (254 - 0) + (-127))
+
+        # Aplicar o brilho
+        if brightness != 0:
+            if brightness > 0:
+                shadow = brightness
+                max_value = 255
+            else:
+                shadow = 0
+                max_value = 255 + brightness
+            
+            alpha = (max_value - shadow) / 255.0 
+            gamma = shadow
+            image = cv2.addWeighted(image, alpha, image, 0, gamma)
+        
+        # Aplicar o contraste
+        if contrast != 0:
+            alpha = float(131 * (contrast + 127)) / (127 * (131 - contrast))
+            gamma = 127 * (1 - alpha)
+            image = cv2.addWeighted(image, alpha, image, 0, gamma)
+
+        # # Garantir que os valores estejam entre 0 e 255
+        # image = np.clip(image, 0, 255).astype(np.uint8)
+
+        # print(f"Brightness: {brightness}, Contrast: {contrast}")
+        # print(f"Alpha: {alpha}, Gamma: {gamma}")
+
+        # # Verificar se a imagem tem valores esperados
+        # print(f"Image min: {image.min()}, Image max: {image.max()}")
+
+        
         return image
+
+
     
     def apply_kernal_bluer(self,image,kernal_size):
         return cv2.blur(image,(kernal_size,kernal_size))
 
-    def rgb_to_hsv_array(self,rgb_array):
-    # Normalize RGB values to [0, 1]
-        rgb_array = rgb_array / 255.0
-        # Convert to HSV
-        hsv_array = np.zeros_like(rgb_array)
-        for i in range(rgb_array.shape[0]):
-            for j in range(rgb_array.shape[1]):
-                r, g, b = rgb_array[i, j]
-                hsv_array[i, j] = colorsys.rgb_to_hsv(r, g, b)
+    def rgb_to_hsv_array(self, rgb_array):
+        # Convertendo para o formato correto para OpenCV (de [0, 255])
+        rgb_array = rgb_array.astype(np.uint8)
+        # Convertendo de RGB para HSV
+        hsv_array = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2HSV)
         return hsv_array
 
-    def hsv_to_rgb_array(self,hsv_array):
-        # Convert back to RGB
-        rgb_array = np.zeros_like(hsv_array)
-        for i in range(hsv_array.shape[0]):
-            for j in range(hsv_array.shape[1]):
-                h, s, v = hsv_array[i, j]
-                rgb_array[i, j] = colorsys.hsv_to_rgb(h, s, v)
-        # Denormalize to [0, 255]
-        return (rgb_array * 255).astype(np.uint8)
+    def hsv_to_rgb_array(self, hsv_array):
+        # Convertendo de HSV para RGB
+        rgb_array = cv2.cvtColor(hsv_array, cv2.COLOR_HSV2RGB)
+        return rgb_array
 
-    def level_image_numpy(self,image_np, minv=0, maxv=255, gamma=1.0):
-        # Convert image to RGB if it is grayscale
-        if len(image_np.shape) == 2:  # Grayscale image
+    def level_image_numpy(self, image_np, minv=0, maxv=255, gamma=1.0):
+        # Verifica se a imagem é grayscale e converte para RGB se necessário
+        if len(image_np.shape) == 2:  # Imagem grayscale
             image_np = cv2.cvtColor(image_np, cv2.COLOR_GRAY2RGB)
         
-        # Convert image to numpy array
+        # Converte imagem para numpy array float32
         np_image = image_np.astype(np.float32)
         
-        # Convert to HSV
+        # Converte para HSV
         hsv_image = self.rgb_to_hsv_array(np_image)
         
-        # Apply level adjustment to V channel
-        v = hsv_image[..., 2]
+        # Aplica o ajuste no canal V
+        v = hsv_image[..., 2] / 255.0  # Normaliza o canal V para [0, 1]
         v = np.clip((v - minv/255.0) / ((maxv - minv)/255.0), 0, 1)
         v = np.power(v, 1.0 / gamma)
         
-        # Reconstruct HSV
-        hsv_image[..., 2] = v
+        # Reconstrói a imagem HSV ajustando o canal V
+        hsv_image[..., 2] = (v * 255).astype(np.uint8)  # Desnormaliza para [0, 255]
         
-        # Convert back to RGB
+        # Converte de volta para RGB
         rgb_image = self.hsv_to_rgb_array(hsv_image)
         
         return rgb_image
-
     def get_filters(self):
         return ['apply_curves','apply_color','apply_levels','apply_brightness_contrast','apply_kernal_bluer','level_image_numpy']
 
@@ -143,4 +167,51 @@ class ImageFilters:
         Espera uma imagem e um kernel e retorna a convolução.
         """
         return cv2.filter2D(image, -1, kernel)
+
+
+ 
         
+def main():
+        
+    a = ImageFilters()
+
+    image = cv2.imread('dataset/04.png')  # Carrega a imagem
+
+
+    # Aplica as funçãos para ajustar a imagem
+    rgb_filter = [120,60,0]
+    curve_points = np.array([[0, 0], [105, 92], [146, 247], [146, 247], [255, 255], [255, 255], [255, 255]])
+
+    image_adjusted_color = a.apply_color(image, rgb_filter)
+    imagem_cinza = cv2.cvtColor(image_adjusted_color, cv2.COLOR_BGR2GRAY)
+    image_adjusted_curves = a.apply_curves(image, curve_points)
+
+
+    # Ajusta os valores para o intervalo de 0 a 255 e converte para uint8
+    image_adjusted = np.clip(image_adjusted_curves, 0, 255).astype(np.uint8)
+
+
+    # Exibe a imagem original e a ajustada
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 1)
+    plt.title("Original")
+    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    plt.subplot(1, 2, 2)
+    plt.title("Ajustada")
+    plt.imshow(cv2.cvtColor(image_adjusted, cv2.COLOR_BGR2RGB))
+    plt.show()
+
+# if __name__ == '__main__':
+#     ImgFilters = ImageFilters()
+
+#     image = cv2.imread('dataset/04.png')  # Carrega a imagem
+#     img = ImgFilters.apply_brightness_contrast(image, 100, 1.5)
+    
+#     plt.figure(figsize=(10, 5))
+#     plt.subplot(1, 2, 1)
+#     plt.title("Original")
+#     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+#     plt.subplot(1, 2, 2)
+#     plt.title("Ajustada")
+#     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+#     plt.show()

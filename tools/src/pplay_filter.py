@@ -12,7 +12,7 @@ class FilteringSegmentation(ImageFilters):
         self.image = None
         self.mask = None
         self.masked_image = None
-        
+        self.counted = 0
         self.R = 2
         self.G = 1
         self.B = 0
@@ -351,13 +351,26 @@ class FilteringSegmentation(ImageFilters):
         _, mask = cv2.threshold(smoothed_image, threshold_value, 255, cv2.THRESH_BINARY)
 
         return mask
-
+    
     def segment_image(self,image_path: str, debug:bool = False) -> cv2.typing.MatLike:
         image = cv2.imread(image_path)
         masked_image = self.remove_background(image, debug)
         highlights = self.get_highlights_by_channel(masked_image, self.B, debug)
         image_segmented = self.draw_rectangle(image,highlights)
         return image_segmented
+
+    async def segment_image_async(self,image_path: str) -> cv2.typing.MatLike:
+        image = cv2.imread(image_path)
+        choice = self.choice_channel(image)
+        masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, choice)))
+        highlights = self.get_highlights_by_channel(masked_image, self.B)
+        image_segmented = self.draw_rectangle(image,highlights)
+        return image_segmented
+
+    def get_counted_value(self):
+        if self.counted == 0:
+            return 'Nenhum segmento encontrado'
+        return self.counted
 
 
 

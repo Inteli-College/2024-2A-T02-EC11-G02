@@ -52,6 +52,7 @@ async def model_version(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, tmp)
             tmp_path = tmp.name
         
+        #print("Objeto copiado")
         # Inicializa o pipeline de processamento e processa a imagem
         pipeline = FilteringSegmentation()
         imagem_processada = await pipeline.segment_image_async(tmp_path)
@@ -69,6 +70,7 @@ async def model_version(file: UploadFile = File(...)):
 
         # Carregar a imagem processada no Firebase Storage
         bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
+        print(f'Nome: {os.path.basename(processed_tmp_path)}')
         processed_blob_name = f"processed/{os.path.basename(processed_tmp_path)}"
         processed_blob = bucket.blob(processed_blob_name)
 
