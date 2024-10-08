@@ -1,57 +1,49 @@
 import numpy as np
-import colorsys
 import matplotlib.pyplot as plt
 import cv2
 
+# Converte de RGB para HSV usando OpenCV
 def rgb_to_hsv_array(rgb_array):
-    # Normalize RGB values to [0, 1]
-    rgb_array = rgb_array / 255.0
-    # Convert to HSV
-    hsv_array = np.zeros_like(rgb_array)
-    for i in range(rgb_array.shape[0]):
-        for j in range(rgb_array.shape[1]):
-            r, g, b = rgb_array[i, j]
-            hsv_array[i, j] = colorsys.rgb_to_hsv(r, g, b)
+    # Convertendo para o formato correto para OpenCV (de [0, 255])
+    rgb_array = rgb_array.astype(np.uint8)
+    # Convertendo de RGB para HSV
+    hsv_array = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2HSV)
     return hsv_array
 
+# Converte de HSV para RGB usando OpenCV
 def hsv_to_rgb_array(hsv_array):
-    # Convert back to RGB
-    rgb_array = np.zeros_like(hsv_array)
-    for i in range(hsv_array.shape[0]):
-        for j in range(hsv_array.shape[1]):
-            h, s, v = hsv_array[i, j]
-            rgb_array[i, j] = colorsys.hsv_to_rgb(h, s, v)
-    # Denormalize to [0, 255]
-    return (rgb_array * 255).astype(np.uint8)
+    # Convertendo de HSV para RGB
+    rgb_array = cv2.cvtColor(hsv_array, cv2.COLOR_HSV2RGB)
+    return rgb_array
 
 def level_image_numpy(image_np, minv=0, maxv=255, gamma=1.0):
-    # Convert image to RGB if it is grayscale
-    if len(image_np.shape) == 2:  # Grayscale image
+    # Verifica se a imagem é grayscale e converte para RGB se necessário
+    if len(image_np.shape) == 2:  # Imagem grayscale
         image_np = cv2.cvtColor(image_np, cv2.COLOR_GRAY2RGB)
     
-    # Convert image to numpy array
+    # Convertendo imagem para float32
     np_image = image_np.astype(np.float32)
     
-    # Convert to HSV
+    # Converte para HSV
     hsv_image = rgb_to_hsv_array(np_image)
     
-    # Apply level adjustment to V channel
-    v = hsv_image[..., 2]
-    v = np.clip((v - minv/255.0) / ((maxv - minv)/255.0), 0, 1)
+    # Aplica o ajuste no canal V
+    v = hsv_image[..., 2] / 255.0  # Normaliza o canal V para [0, 1]
+    v = np.clip((v - minv / 255.0) / ((maxv - minv) / 255.0), 0, 1)
     v = np.power(v, 1.0 / gamma)
     
-    # Reconstruct HSV
-    hsv_image[..., 2] = v
+    # Reconstroi a imagem HSV ajustando o canal V
+    hsv_image[..., 2] = (v * 255).astype(np.uint8)  # Desnormaliza o canal V para [0, 255]
     
-    # Convert back to RGB
+    # Converte de volta para RGB
     rgb_image = hsv_to_rgb_array(hsv_image)
     
     return rgb_image
 
 def main():
     # Exemplo de uso
-    image = cv2.imread('dataset/04.png')
-    imagem_cinza = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.imread('dataset/test/01_test.png')  # Lê a imagem no formato BGR
+    imagem_cinza = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Converte para grayscale
     adjusted_image = level_image_numpy(imagem_cinza, minv=55, maxv=150, gamma=10)
 
     # Exibe a imagem original e a ajustada
@@ -62,12 +54,10 @@ def main():
     plt.title("Original")
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # Converte BGR para RGB para exibir corretamente
 
-
     # Exibir imagem ajustada
     plt.subplot(1, 2, 2)
     plt.title("Ajustada")
     plt.imshow(adjusted_image)
-
 
     plt.show()
 

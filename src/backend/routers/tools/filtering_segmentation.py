@@ -118,7 +118,7 @@ class FilteringSegmentation(ImageFilters):
         target_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, self.choice_channel(image))))
         return target_image
 
-    def hailht_extractor(self, image_path: str) -> dict: # Anasilzar com mais calma
+    def highlight_extractor(self, image_path: str) -> dict: # Anasilzar com mais calma
         image = cv2.imread(image_path)
         
 
@@ -127,7 +127,7 @@ class FilteringSegmentation(ImageFilters):
         channels_mean['blue'] = 255 - channels_mean['blue']
         channels_mean['green'] = 255 - channels_mean['green']
         channels_mean['red'] = 255 - channels_mean['red']
-        channel_hailht = min(channels_mean)
+        channel_highlight = min(channels_mean)
 
         # 
         channels = {
@@ -135,11 +135,11 @@ class FilteringSegmentation(ImageFilters):
             'green': self.G,
             'red': self.R
         }
-        channels[channel_hailht]
+        channels[channel_highlight]
 
         masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, self.choice_channel(image))))
-        hailhts = self.get_highlights_by_channel(masked_image, channels[channel_hailht])
-        self.draw_rectangle_and_plot(image,hailhts)
+        highlights = self.get_highlights_by_channel(masked_image, channels[channel_highlight])
+        self.draw_rectangle_and_plot(image,highlights)
 
         return channels_mean
         
@@ -259,6 +259,6 @@ class FilteringSegmentation(ImageFilters):
 #     filter_segmentation = FilteringSegmentation()
 #     #filter_segmentation.remove_background_and_plot(image_path)
 #     #filter_segmentation.segment_and_plot(image_path)
-#     #filter_segmentation.hailht_extractor(image_path)
+#     #filter_segmentation.highlight_extractor(image_path)
 #     image_segmented = filter_segmentation.segment_image(image_path)
 #     filter_segmentation.save_image(image_segmented, 'dataset/train/1_segmented.png')
