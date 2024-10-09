@@ -13,6 +13,7 @@ class FilteringSegmentation(ImageFilters):
         self.mask = None
         self.masked_image = None
         self.counted = 0
+        self.model_version = None
         self.R = 2
         self.G = 1
         self.B = 0
@@ -171,6 +172,8 @@ class FilteringSegmentation(ImageFilters):
         # Normaliza o canal alfa (valores entre 0 e 1)
         alpha_normalizado = alpha.astype(float) / 255.0
 
+        self.mask = alpha_normalizado
+
         # Aplica o canal alfa aos canais RGB
         image_rgb_mascarado = bgr * alpha_normalizado[:, :, None]
 
@@ -183,18 +186,25 @@ class FilteringSegmentation(ImageFilters):
         # Converte o canal escolhido de cinza para BGR para exibição
         channel_choiced = cv2.cvtColor(channels[channel], cv2.COLOR_GRAY2BGR)
 
+        #invertendo a imagem
+        #channel_choiced = cv2.bitwise_not(channel_choiced)
+
         # Plota o canal escolhido após a aplicação da máscara alfa
         if debug == True:
-             self.plot_images(channel_choiced, f"Segunda Máscara canal {channel}", 1, ncols=1, nrows=1)
+             self.plot_images(channel_choiced, f"[ Inicio Pepi 2 ] Inversa do canal {self.rgb[channel]}", 1, ncols=1, nrows=1)
+
 
         #print(self.get_highlights(channel_choiced))
-        # Aplica brilho e contraste ao canal escolhido
-        image_transform = super().level_image_numpy(channel_choiced, 0, 28, 0.37)
-        image_transform = super().level_image_numpy(image_transform, 0, 28, 0.37)
 
-        # Plota a imagem após aplicação de brilho e contraste
+        curve_points = np.array([[0, 0], [72, 72], [84, 247], [255, 255], [255, 255], [255, 255], [255, 255]])
+        image_transform = super().apply_curves(channel_choiced, curve_points)
+        image_transform = super().level_image_numpy(image_transform, 60, 255, 1.86)
+        
+        
+        # Plota a imagem após aplicação dos filtros
         if debug == True:
              self.plot_images(image_transform, f"Segunda Máscara Após Filtros", 1, ncols=1, nrows=1)
+
 
         # Aplica limiarização para criar a máscara binária
         _, binary_mask = cv2.threshold(image_transform, 120, 255, cv2.THRESH_BINARY)
@@ -203,12 +213,12 @@ class FilteringSegmentation(ImageFilters):
         if debug == True:
              self.plot_images(binary_mask, f"Máscara Binária", 1, ncols=1, nrows=1)
 
-        # Inverte a máscara binária
-        mask_inverted = cv2.bitwise_not(binary_mask)
+        # Inverte a máscara binária [ Vesão 1 ] -> Somente na versão 1
+        # mask_inverted = cv2.bitwise_not(binary_mask)
 
         # Plota a máscara invertida
-        if debug == True:
-             self.plot_images(mask_inverted, f"Máscara Invertida", 1, ncols=1, nrows=1)
+        # if debug == True:
+        #      self.plot_images(mask_inverted, f"Máscara Invertida", 1, ncols=1, nrows=1)
 
         # Normalizar o canal alpha para o intervalo de 0 a 1
         alpha_normalized = alpha.astype(np.float32) / 255.0
@@ -217,14 +227,18 @@ class FilteringSegmentation(ImageFilters):
         alpha_expanded = np.stack((alpha_normalized,) * 3, axis=-1)  # Repetindo ao longo do eixo de canais
     
         # Aplicar a máscara multiplicando a imagem em escala de cinza pelo canal alpha
-        result_image = mask_inverted[:, :, :] * alpha_expanded
+        result_image = binary_mask[:, :, :] * alpha_expanded
 
         if debug == True:
-             self.plot_images(result_image, f"Máscara Invertida Cortada", 1, ncols=1, nrows=1)        
+             self.plot_images(result_image, f"Máscara Cortada", 1, ncols=1, nrows=1)        
 
         # Verifica o formato da máscara gerada
         print(f"Mask_high shape: {binary_mask.shape}")
 
+        # --------------------------------- [ Vesão 1 ] ----------------------------------------- #
+        # image_transform = super().level_image_numpy(channel_choiced, 0, 28, 0.37)
+        # image_transform = super().level_image_numpy(image_transform, 0, 28, 0.37)
+        # -------------------------------------------------------------------------------------- #
 
 
         return result_image
@@ -315,8 +329,8 @@ class FilteringSegmentation(ImageFilters):
         if len(image_transform.shape) == 3:
             image_transform = cv2.cvtColor(image_transform, cv2.COLOR_BGR2GRAY)
 
-        _, normal_image = count_trees_with_adjustments(image_transform, normal_image, min_area)
-
+        counted, normal_image = count_trees_with_adjustments(image_transform, normal_image, min_area)
+        self.counted = counted
         return normal_image
 
     def get_texture_mask(self, image: cv2.typing.MatLike, kernel_size=3, threshold_value=100) -> cv2.typing.MatLike:
@@ -352,21 +366,39 @@ class FilteringSegmentation(ImageFilters):
 
         return mask
     
-    def segment_image(self,image_path: str, debug:bool = False) -> cv2.typing.MatLike:
-        image = cv2.imread(image_path)
+    async def segment_image(self,image: cv2.typing.MatLike, debug:bool = False) -> cv2.typing.MatLike:
         masked_image = self.remove_background(image, debug)
         highlights = self.get_highlights_by_channel(masked_image, self.B, debug)
+        self.masked_image = await self.image_colorizer(image)
         image_segmented = self.draw_rectangle(image,highlights)
         return image_segmented
 
-    async def segment_image_async(self,image_path: str) -> cv2.typing.MatLike:
+    async def image_colorizer(self, image:cv2.typing.MatLike) -> cv2.typing.MatLike: # Ser assyncrono
+        # Verificar se é um array ou se estar vazio
+        if not isinstance(self.mask, np.ndarray):
+            print("ERRO in image_colorizer(): Máscara não encontrada")
+            return
+        
+        alpha = self.mask.astype(np.uint8)
+
+        color = np.array([0, 0, 255])  # Cor verde (BGR no OpenCV)
+
+        color_mask = np.zeros_like(image)  # Cria uma máscara com as mesmas dimensões da imagem
+        color_mask[alpha == 1] = color  # Aplica a cor apenas nas áreas onde a máscara é 1
+
+        # Sobrepor a máscara colorida na imagem
+        result = cv2.addWeighted(image, 1.0, color_mask, 0.5, 0)
+        return result
+        
+        
+
+
+    async def segment_image_async(self,image_path: str, model_version="v1") -> cv2.typing.MatLike: # Ser assyncrono
         image = cv2.imread(image_path)
-        choice = self.choice_channel(image)
-        masked_image = cv2.bitwise_and(image, (self.get_mask_by_channel(image, choice)))
-        highlights = self.get_highlights_by_channel(masked_image, self.B)
-        image_segmented = self.draw_rectangle(image,highlights)
-        return image_segmented
-
+        self.model_version = model_version
+        final_image = await self.segment_image(image)
+        return final_image
+    
     def get_counted_value(self):
         if self.counted == 0:
             return 'Nenhum segmento encontrado'
@@ -374,10 +406,14 @@ class FilteringSegmentation(ImageFilters):
 
 
 
+# async def main():
+#     image_path = "dataset/train/usp_04_100m.png"
+#     filter_segmentation = FilteringSegmentation()
+#     img = await filter_segmentation.segment_image_async(image_path, True)
+#     filter_segmentation.plot_images(img, f"Resultado Final: {filter_segmentation.counted} Árvores encontradas",1, ncols=1, nrows=1)
+#     filter_segmentation.plot_images(filter_segmentation.masked_image, f"Segmentos",1, ncols=1, nrows=1)
 
-if __name__ == '__main__':
-    #image_path = "dataset/train/ups_05.png"
-    image_path = "dataset/test/01_test.png"
-    filter_segmentation = FilteringSegmentation()
-    img = filter_segmentation.segment_image(image_path, False)
-    filter_segmentation.plot_images(img, "Resultado Final",1, ncols=1, nrows=1)
+
+# if __name__ == '__main__':
+#     import asyncio
+#     asyncio.run(main())

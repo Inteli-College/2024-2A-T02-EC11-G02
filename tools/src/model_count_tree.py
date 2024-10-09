@@ -64,7 +64,7 @@ def count_trees_with_adjustments_and_plot(image_path):
     return len(predicted_objects)
 
 
-def count_trees_with_adjustments(transform_image, output_image,  min_size: float = 13.0):
+def count_trees_with_adjustments(transform_image, output_image,  min_size: float = 13.0, max_size: float = 3200.0):
     if transform_image is None:
         raise FileNotFoundError(f"Arquivo de imagem não encontrado")
     
@@ -84,13 +84,13 @@ def count_trees_with_adjustments(transform_image, output_image,  min_size: float
     # Segmentar componentes conectados no mapa de calor binário
     structure = np.ones((3, 3), dtype=int)
     labeled_image, _ = label(heatmap_binary, structure=structure)
-
+    print(f"Árvores detectadas antes do ajuste: {len(find_objects(labeled_image))}")
     # Filtrar componentes pequenos com um valor mínimo ajustado
     predicted_objects = []
 
     for obj in find_objects(labeled_image):
         y_slice, x_slice = obj
-        if (x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start) > min_size:
+        if ((x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start) > min_size) and (x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start) < max_size:
             predicted_objects.append([x_slice.start, y_slice.start, x_slice.stop, y_slice.stop])
 
     # Exibir o número de árvores detectadas
@@ -103,13 +103,5 @@ def count_trees_with_adjustments(transform_image, output_image,  min_size: float
 
     return (len(predicted_objects), output_image)
 
-
-
-
-def main():
-    # Caminho da imagem fornecida
-    image_path = 'dataset/test/Patrica_teste.png'
-    tree_count = count_trees_with_adjustments_and_plot(image_path)
-    print(tree_count)
 
 
