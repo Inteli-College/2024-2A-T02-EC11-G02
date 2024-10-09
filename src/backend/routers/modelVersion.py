@@ -13,7 +13,7 @@ import zipfile
 
 router = APIRouter()
 
-client = MongoClient("mongodb://root:example@mongodb:27017")
+client = MongoClient("mongodb://root:example@mongo:27017")
 db = client["analise_ambiental"]
 collection = db["resultados_modelo"]
 
@@ -92,7 +92,6 @@ async def model_version(file: UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
-
 
 @router.post("/upload_and_process/")
 async def upload_and_process(file: UploadFile = File(...)):
