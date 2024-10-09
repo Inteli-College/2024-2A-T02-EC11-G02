@@ -11,15 +11,16 @@ services:
       - ./root:/code/root
     restart: on-failure
     environment:
-      - MONGO_URI=mongodb://root:example@mongo:27017
+      - MONGO_URI=mongodb://root:example@mongodb:27017
       - MONGO_DB=mongo
       - FIREBASE_STORAGE_BUCKET=grupo2-93568.appspot.com
       - FIREBASE_KEY_PATH=/code/root/grupo2-93568-firebase-adminsdk-ck9m1-2cbbaaec91.json
 
 
-  mongo:
+  mongodb:
     build: ./mongo
     restart: on-failure
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example

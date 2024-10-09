@@ -13,7 +13,7 @@ import zipfile
 
 router = APIRouter()
 
-client = MongoClient("mongodb://root:example@localhost:27017")
+client = MongoClient("mongodb://root:example@mongodb:27017")
 db = client["analise_ambiental"]
 collection = db["resultados_modelo"]
 
@@ -85,6 +85,8 @@ async def model_version(file: UploadFile = File(...)):
         # Exclua o arquivo temporário da imagem processada
         os.remove(processed_tmp_path)
 
+
+        
         # Retorne a URL pública da imagem processada
         return {"processed_image_url": processed_image_url}
 
@@ -95,6 +97,11 @@ async def model_version(file: UploadFile = File(...)):
 @router.post("/upload_and_process/")
 async def upload_and_process(file: UploadFile = File(...)):
     pipeline = None
+
+    # Dicionários para URLs dos arquivos
+    original_urls = []
+    processed_urls = []
+    documentos = []
     try:
         # Referência ao bucket de storage
         bucket = storage.bucket()
@@ -118,10 +125,6 @@ async def upload_and_process(file: UploadFile = File(...)):
                     with zip_file.open(file_name) as extracted_file:
                         extracted_files[file_name] = extracted_file.read()
                 print(f"Extracted files: {list(extracted_files.keys())}")
-
-                # Dicionários para URLs dos arquivos
-                original_urls = []
-                processed_urls = []
 
                 # Processa cada imagem extraída do arquivo ZIP
                 for file_name, file_content in extracted_files.items():
@@ -184,16 +187,12 @@ async def upload_and_process(file: UploadFile = File(...)):
                             "margem_de_erro": 25,  # Margem de erro em percentual
                             "img": {
                                 "url_imagem_processada": processed_blob.public_url,
+                                "url_imagem_original": original_blob.public_url,
                                 "quantidade_de_arvores": pipeline.counted,
                                 "metros_quadrados_vegetacao": 5000
                             }
                         }
-
-                        # Inserir o documento na coleção
-                        resultado = collection.insert_one(documento)
-
-                        print(f"Documento inserido com ID: {resultado.inserted_id}")
-
+                        documentos.append(documento)
                     except Exception as e:
                         print(f"Error during image processing: {str(e)}")
                         raise HTTPException(status_code=500, detail=f"Error during image processing: {str(e)}")
@@ -201,10 +200,11 @@ async def upload_and_process(file: UploadFile = File(...)):
                     # Remove o arquivo temporário após o processamento
                     os.remove(tmp_path)
                     print(f"Temporary file removed: {tmp_path}")
-
-                # Retorna as URLs públicas das imagens originais e processadas
-                print("Processing completed successfully. Returning URLs.")
-                return {
+            #print(documentos)
+            # Insere os documentos no banco de dados
+            for documento in documentos:
+                collection.insert_one(documento)
+            return {
                     "message": "Imagens processadas e enviadas com sucesso!",
                     "original_urls": original_urls,
                     "processed_urls": processed_urls

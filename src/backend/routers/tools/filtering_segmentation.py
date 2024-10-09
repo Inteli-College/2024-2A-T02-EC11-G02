@@ -183,14 +183,24 @@ class FilteringSegmentation(ImageFilters):
         # Converte o canal escolhido de cinza para BGR para exibição
         channel_choiced = cv2.cvtColor(channels[channel], cv2.COLOR_GRAY2BGR)
 
+
+        # Vesrsão 2
+        channel_choiced = cv2.bitwise_not(channel_choiced)
+        # --------------------------------------------------------------------------------------------
+
         # Plota o canal escolhido após a aplicação da máscara alfa
         if debug == True:
              self.plot_images(channel_choiced, f"Segunda Máscara canal {channel}", 1, ncols=1, nrows=1)
 
-        #print(self.get_highlights(channel_choiced))
-        # Aplica brilho e contraste ao canal escolhido
-        image_transform = super().level_image_numpy(channel_choiced, 0, 28, 0.37)
-        image_transform = super().level_image_numpy(image_transform, 0, 28, 0.37)
+        # Versão 2 
+        curve_points = np.array([[0, 0], [184, 100], [217, 255], [255, 255], [255, 255], [255, 255], [255, 255]])
+        image_transform = super().apply_curves(channel_choiced, curve_points)
+        image_transform = super().level_image_numpy(image_transform, 102, 255, 9.9)
+        image_transform = super().level_image_numpy(image_transform, 102, 255, 9.9)
+        # --------------------------------------------------------------------------------------------
+
+        # image_transform = super().level_image_numpy(channel_choiced, 0, 28, 0.37)
+        # image_transform = super().level_image_numpy(image_transform, 0, 28, 0.37)
 
         # Plota a imagem após aplicação de brilho e contraste
         if debug == True:
