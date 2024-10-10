@@ -10,6 +10,7 @@ from pymongo import MongoClient
 from firebase_admin import storage
 import io
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 
 router = APIRouter()
 
@@ -42,95 +43,101 @@ async def modelVersion(file: UploadFile = File(...)) :
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
+
+def save_and_upload_image_to_firebase(image, suffix, folder="processed"):
+    # Converte a imagem para BGR se necessário
+    image_bgr = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+    # Crie um novo arquivo temporário para salvar a imagem processada
+    with NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        # Salva a imagem processada diretamente no arquivo temporário
+        cv2.imwrite(tmp.name, image_bgr)
+        tmp_path = tmp.name
+
+    # Carregar a imagem no Firebase Storage
+    bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
+    print(f'Nome: {os.path.basename(tmp_path)}')
+    blob_name = f"{folder}/{os.path.basename(tmp_path)}"
+    blob = bucket.blob(blob_name)
+
+    # Codifique a imagem como PNG e faça o upload
+    with open(tmp_path, "rb") as tmp_file:
+        blob.upload_from_file(tmp_file, content_type='image/png')
+
+    # Torne a URL da imagem pública
+    blob.make_public()
+    image_url = blob.public_url
+
+    # Exclua o arquivo temporário
+    os.remove(tmp_path)
+
+    return image_url
+
+from concurrent.futures import ThreadPoolExecutor
+from fastapi import BackgroundTasks
+
+# Função auxiliar para fazer o upload de uma imagem no Firebase
+def upload_image_to_firebase(image, suffix=".png"):
+    try:
+        return save_and_upload_image_to_firebase(image, suffix)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload image: {str(e)}")
+
+
 @router.post("/firebase_url")
 async def model_version(file: UploadFile = File(...)):
     try:
-        # Crie um arquivo temporário para armazenar a imagem enviada
-        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-            shutil.copyfileobj(file.file, tmp)
-            tmp_path = tmp.name
-        
-        #print("Objeto copiado")
-        # Inicializa o pipeline de processamento e processa a imagem
-        pipeline = FilteringSegmentation()
-        imagem_processada = await pipeline.segment_image_async(tmp_path)
+        # Verifique se o arquivo foi enviado
+        if not file:
+            raise HTTPException(status_code=400, detail="No file uploaded")
 
-        # Exclua o arquivo temporário original após o processamento
-        os.remove(tmp_path)
+        try:
+            # Crie um arquivo temporário para armazenar a imagem enviada
+            with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+                shutil.copyfileobj(file.file, tmp)
+                tmp_path = tmp.name
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to save uploaded file: {str(e)}")
 
-        # Crie um novo arquivo temporário para salvar a imagem processada
-        # Se a imagem estiver em RGB, converta para BGR, já que o OpenCV usa BGR
-        imagem_processada_bgr = cv2.cvtColor(imagem_processada, cv2.COLOR_RGB2BGR)
+        try:
+            # Inicializa o pipeline de processamento e processa a imagem
+            pipeline = FilteringSegmentation()
+            imagem_processada = await pipeline.segment_image_async(tmp_path)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Image processing failed: {str(e)}")
+        finally:
+            # Exclua o arquivo temporário original após o processamento
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
 
-        # Crie um novo arquivo temporário para salvar a imagem processada
-        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-            # Salva a imagem processada diretamente no arquivo temporário
-            cv2.imwrite(tmp.name, imagem_processada_bgr)
-            
-            processed_tmp_path = tmp.name
-            
+        try:
+            # Executa o upload das imagens processada e colorida em threads separadas
+            with ThreadPoolExecutor() as executor:
+                future_processed = executor.submit(upload_image_to_firebase, imagem_processada, ".png")
+                future_colorized = executor.submit(upload_image_to_firebase, pipeline.masked_image, ".png")
 
-        # Carregar a imagem processada no Firebase Storage
-        bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
-        print(f'Nome: {os.path.basename(processed_tmp_path)}')
-        processed_blob_name = f"processed/{os.path.basename(processed_tmp_path)}"
-        processed_blob = bucket.blob(processed_blob_name)
+                # Aguarda que ambas as tarefas de upload sejam concluídas
+                processed_image_url = future_processed.result()
+                colorize_processed_image_url = future_colorized.result()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to upload images: {str(e)}")
 
-        # Codifique a imagem processada como PNG e faça o upload
-        with open(processed_tmp_path, "rb") as processed_file:
-            processed_blob.upload_from_file(processed_file, content_type='image/png')
-
-        # Torne a URL da imagem pública
-        processed_blob.make_public()
-        processed_image_url = processed_blob.public_url
-
-        # Exclua o arquivo temporário da imagem processada
-        os.remove(processed_tmp_path)
-
-        # ---------------------------- [ Para imagem colorida ] ------------------------------- #
-        
-        colorize_processed_rgb = cv2.cvtColor(pipeline.masked_image, cv2.COLOR_RGB2BGR)
-
-        # Crie um novo arquivo temporário para salvar a imagem processada
-        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-            # Converte o resultado para uma imagem do PIL e salva no arquivo temporário
-            cv2.imwrite(tmp.name, colorize_processed_rgb)
-            
-            colorize_processed_tmp_path = tmp.name
-            
-
-        # Carregar a imagem processada no Firebase Storage
-        bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
-        print(f'Nome: {os.path.basename(colorize_processed_tmp_path)}')
-        colorize_processed_blob_name = f"processed/{os.path.basename(colorize_processed_tmp_path)}"
-        colorize_processed_blob = bucket.blob(colorize_processed_blob_name)
-
-        # Codifique a imagem processada como PNG e faça o upload
-        with open(colorize_processed_tmp_path, "rb") as processed_file:
-            colorize_processed_blob.upload_from_file(processed_file, content_type='image/png')
-
-        # Torne a URL da imagem pública
-        colorize_processed_blob.make_public()
-        colorize_processed_image_url = colorize_processed_blob.public_url
-
-        # Exclua o arquivo temporário da imagem processada
-        os.remove(colorize_processed_tmp_path)
-
-
-
-
-        # Retorne a URL pública da imagem processada
+        # Retorne as URLs públicas das imagens e outros dados do pipeline
         return {
             "processed_image_url": processed_image_url,
             "colorize_processed_image_url": colorize_processed_image_url,
             "version": pipeline.model_version,
             "counted": pipeline.counted,
-            # "green_area": pipeline.green_pixels
+        }
 
-            }
-
+    except HTTPException as e:
+        # Captura e lança exceções específicas
+        raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        # Captura qualquer outra exceção não tratada
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+
+
 
 @router.post("/upload_and_process/")
 async def upload_and_process(file: UploadFile = File(...)):
