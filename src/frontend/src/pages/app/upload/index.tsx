@@ -10,6 +10,7 @@ const options = [
   { value: "brasil-centro-oeste", label: "Brasil - Centro-Oeste" },
 ];
 
+
 export default function UploadPage() {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null); 
