@@ -52,3 +52,7 @@ Na quarta sprint do projeto, foi produzida uma análise financeira, a fim de que
     style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
     src="https://www.canva.com/design/DAGR3VpNoA8/28rJrZwGOn3LgoOFcpyXqQ/view?embed">
 </iframe>
+
+## Sprint V
+
+Na Sprint 5, finalizamos o projeto elaborando um Business Model Canvas completo e entregamos o protótipo final validando a prova de conceito, com os requisitos funcionais e não funcionais concluídos e o roadmap atualizado. Além disso, construímos a documentação completa utilizando o Docusaurus, integrada ao pipeline de deploy para o GitHub Pages, destacando as funcionalidades desenvolvidas e fornecendo links para as implementações de código relevantes.
