@@ -10,6 +10,9 @@ const options = [
   { value: "brasil-centro-oeste", label: "Brasil - Centro-Oeste" },
 ];
 
+const modelVersion = [
+  { value: "v1", label: "v1" },
+];
 
 export default function UploadPage() {
 
@@ -63,8 +66,8 @@ export default function UploadPage() {
 
   return (
     <div>
-      <main className="flex my-14 justify-evenly px-14 py-8">
-        <div className="w-1/3">
+      <main className="flex flex-col my-14 px-14 py-8 gap-y-10 items-center">
+        <div className="w-1/2">
           <h1 className="font-bold text-[#575EA6]">Teste de modelo</h1>
           <p>
             O ESG é uma das tendências mais relevantes de mercado dos últimos
@@ -73,11 +76,19 @@ export default function UploadPage() {
           </p>
         </div>
         <div className="flex flex-col w-1/2">
-          <div className="flex gap-x-10">
+          <div className="flex flex-col gap-y-10">
             <form >
               <div>
-                <label className="font-bold">Escolha a região</label>
-                <Select options={options} className="mb-6" />
+                <div className="flex gap-x-11">
+                  <div className="w-1/3">
+                    <label className="font-bold">Escolha a região</label>
+                    <Select options={options} className="mb-6" />
+                  </div>
+                  <div className="w-1/3">
+                    <label className="font-medium">Escolha a versão do modelo</label>
+                    <Select options={modelVersion} className="mb-6" />
+                  </div>
+                </div>
                 <label htmlFor="file-upload" className="font-bold">
                   Upload files
                 </label>
@@ -109,15 +120,15 @@ export default function UploadPage() {
                 <p className="text-white">Pré-visualização da imagem</p>
               )}
             </div>
-
-          </div>
-          <button
+            <button
             type="button"
             onClick={handleSubmit}
-            className="w-28 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Enviar
           </button>
+          </div>
+
         </div>
       </main>
       <section>
