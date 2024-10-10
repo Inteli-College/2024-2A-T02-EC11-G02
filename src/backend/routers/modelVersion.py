@@ -4,8 +4,8 @@ from fastapi.responses import FileResponse
 import shutil
 import os
 from tempfile import NamedTemporaryFile
-from PIL import Image
 import cv2
+from PIL import Image
 from pymongo import MongoClient
 from firebase_admin import storage
 import io
@@ -17,7 +17,7 @@ client = MongoClient("mongodb://root:example@mongo:27017")
 db = client["analise_ambiental"]
 collection = db["resultados_modelo"]
 
-@router.post("/modelversion")
+@router.post("/modelversion") # Testar
 async def modelVersion(file: UploadFile = File(...)) :
     try:
         # Create a temporary file to store the uploaded image
@@ -31,12 +31,10 @@ async def modelVersion(file: UploadFile = File(...)) :
 
         # Opcionalmente, exclua o arquivo temporário após o processamento
         os.remove(tmp_path)
-
+        imagem_processada_bgr = cv2.cvtColor(imagem, cv2.COLOR_RGB2BGR)
         # Cria um novo arquivo temporário para salvar a imagem processada
         with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-            Imagem = Image.fromarray(imagem)
-            Imagem.save(tmp.name)
-            
+            cv2.imwrite(tmp.name, imagem_processada_bgr)
             tmp_path = tmp.name
         
         return FileResponse(tmp_path, filename=os.path.basename(tmp_path))
@@ -61,12 +59,16 @@ async def model_version(file: UploadFile = File(...)):
         os.remove(tmp_path)
 
         # Crie um novo arquivo temporário para salvar a imagem processada
+        # Se a imagem estiver em RGB, converta para BGR, já que o OpenCV usa BGR
+        imagem_processada_bgr = cv2.cvtColor(imagem_processada, cv2.COLOR_RGB2BGR)
+
+        # Crie um novo arquivo temporário para salvar a imagem processada
         with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-            # Converte o resultado para uma imagem do PIL e salva no arquivo temporário
-            imagem_pil = Image.fromarray(imagem_processada)
-            imagem_pil.save(tmp.name)
+            # Salva a imagem processada diretamente no arquivo temporário
+            cv2.imwrite(tmp.name, imagem_processada_bgr)
             
             processed_tmp_path = tmp.name
+            
 
         # Carregar a imagem processada no Firebase Storage
         bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
@@ -85,10 +87,47 @@ async def model_version(file: UploadFile = File(...)):
         # Exclua o arquivo temporário da imagem processada
         os.remove(processed_tmp_path)
 
-
+        # ---------------------------- [ Para imagem colorida ] ------------------------------- #
         
+        colorize_processed_rgb = cv2.cvtColor(pipeline.masked_image, cv2.COLOR_RGB2BGR)
+
+        # Crie um novo arquivo temporário para salvar a imagem processada
+        with NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            # Converte o resultado para uma imagem do PIL e salva no arquivo temporário
+            cv2.imwrite(tmp.name, colorize_processed_rgb)
+            
+            colorize_processed_tmp_path = tmp.name
+            
+
+        # Carregar a imagem processada no Firebase Storage
+        bucket = storage.bucket()  # Certifique-se de que a configuração do Firebase está correta
+        print(f'Nome: {os.path.basename(colorize_processed_tmp_path)}')
+        colorize_processed_blob_name = f"processed/{os.path.basename(colorize_processed_tmp_path)}"
+        colorize_processed_blob = bucket.blob(colorize_processed_blob_name)
+
+        # Codifique a imagem processada como PNG e faça o upload
+        with open(colorize_processed_tmp_path, "rb") as processed_file:
+            colorize_processed_blob.upload_from_file(processed_file, content_type='image/png')
+
+        # Torne a URL da imagem pública
+        colorize_processed_blob.make_public()
+        colorize_processed_image_url = colorize_processed_blob.public_url
+
+        # Exclua o arquivo temporário da imagem processada
+        os.remove(colorize_processed_tmp_path)
+
+
+
+
         # Retorne a URL pública da imagem processada
-        return {"processed_image_url": processed_image_url}
+        return {
+            "processed_image_url": processed_image_url,
+            "colorize_processed_image_url": colorize_processed_image_url,
+            "version": pipeline.model_version,
+            "counted": pipeline.counted,
+            # "green_area": pipeline.green_pixels
+
+            }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")

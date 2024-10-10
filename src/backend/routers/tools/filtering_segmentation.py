@@ -10,6 +10,7 @@ from routers.tools.model_count_tree import count_trees_with_adjustments
 class FilteringSegmentation(ImageFilters):
     def __init__(self):
         super().__init__()
+        # self.green_pixels = 0
         self.image = None
         self.mask = None
         self.masked_image = None
@@ -380,6 +381,8 @@ class FilteringSegmentation(ImageFilters):
             print("ERRO in image_colorizer(): Máscara não encontrada")
             return
         
+        # Contar valore == 1
+        # self.green_pixels = np.sum(self.mask == 1)
         alpha = self.mask.astype(np.uint8)
 
         color = np.array([0, 0, 255])  # Cor verde (BGR no OpenCV)
@@ -391,9 +394,6 @@ class FilteringSegmentation(ImageFilters):
         result = cv2.addWeighted(image, 1.0, color_mask, 0.5, 0)
         return result
         
-        
-
-
     async def segment_image_async(self,image_path: str, model_version="v1") -> cv2.typing.MatLike: # Ser assyncrono
         image = cv2.imread(image_path)
         self.model_version = model_version
