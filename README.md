@@ -1,10 +1,10 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
-<!-- <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="docs/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
-</p> -->
+<p align="center">
+<a href= "https://www.inteli.edu.br/"><img src="https://www.inteli.edu.br/wp-content/uploads/2024/06/logo-inteli-3-768x420-1.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
+</p> 
 
-# Edge Computing
+# Edge Computin
 
 ## Grupo 02
 
@@ -58,7 +58,15 @@ A estrutura acima é projetada para manter o projeto organizado e fácil de nave
 <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/2023M8T2-Inteli/grupo2">Inteli, Amanda, Igor, Jackson, João, Kil, Luca, Patrícia, Tainara</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>. <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"></p>
 
 ## Documentação
-Para acessar a documentação do projeto, digite os seguintes comandos:
+
+  Confira nossa documentação no botão abaixo:
+
+  [![Button Click]][Link]
+
+  [Button Click]: https://img.shields.io/badge/Documentação-37a779?style=for-the-badge
+  [Link]: https://inteli-college.github.io/2024-2A-T02-EC11-G02/
+  
+Para acessar a documentação do projeto localmente, digite os seguintes comandos:
 
 ```bash
 cd docs
