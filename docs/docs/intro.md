@@ -4,7 +4,9 @@ sidebar_position: 1
 
 # Introdução
 
-_To-do_
+O projeto foi realizado em parceria com a Abundance, uma Climate-Tech focada em impulsionar a restauração ambiental por meio do Abundance Token, do Ecossistema ESG e da Educação. A empresa tem como propósito a preservação de regiões florestais, por meio da tokenização dos ativos ambientais presentes nesse ecossistema. Cada árvore plantada pela Abundance está atrelada a uma representação digital por meio de um token registrado na Blockchain. Desse modo, busca-se contribuir para a transição rumo a uma economia sustentável.
+
+Uma das principais dificuldades enfrentadas pela Abundance está relacionada ao atual processo de monitoramento das regiões florestais sob sua gestão. Um dado essencial, tanto para a empresa quanto para seus clientes, é a quantidade de árvores plantadas pela iniciativa, uma vez que isso reforça a transparência e a robustez do processo de monitoramento e controle de informações, o que é crucial para a obtenção de determinadas certificações. Dessa forma, foi concebida uma solução que utiliza um modelo de visão computacional para realizar a contagem de árvores, por meio de um sistema embarcado acoplável a drones capaz de capturar imagens das regiões de plantio da empresa. Por meio de uma aplicação robusta, o parceiro será capaz de submeter imagens de diferentes origens — tanto de drones, quanto de satélites — a um modelo que utiliza a técnica de filtragem e segmentação para contabilizar os ativos florestais presentes no local. Espera-se contribuir, portanto, para o aprimoramento do processo de contagem de árvores, até então realizado manualmente, de modo a reforçar a transparência de informações relacionadas ao principal ativo com o qual a Abundance trabalha.
 
 ## Sprint I
 
@@ -49,4 +51,15 @@ Na quarta sprint do projeto, foi produzida uma análise financeira, a fim de que
 <iframe loading="lazy"
     style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
     src="https://www.canva.com/design/DAGR3VpNoA8/28rJrZwGOn3LgoOFcpyXqQ/view?embed">
+</iframe>
+
+## Sprint V
+
+Na Sprint 5, finalizamos o projeto elaborando um Business Model Canvas completo e entregamos o protótipo final validando a prova de conceito, com os requisitos funcionais e não funcionais concluídos e o roadmap atualizado. Além disso, construímos a documentação completa utilizando o Docusaurus, integrada ao pipeline de deploy para o GitHub Pages, destacando as funcionalidades desenvolvidas e fornecendo links para as implementações de código relevantes.
+
+[Link da Apresentação](https://www.canva.com/design/DAGTKfz6sww/hko0CbC4UWTGTMRiyDhPIw/view?utm_content=DAGTKfz6sww&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+<iframe loading="lazy"
+    style={{ display: 'block', margin: 'auto', width: '100%', height: '66vh' }}
+    src="https://www.canva.com/design/DAGTKfz6sww/qQFf5bXtzVBXWJ-XHx2huQ/view?embed">
 </iframe>

@@ -1,11 +1,19 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /code
 
-COPY requirements.txt .
+RUN apt-get update && \
+    apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libfontconfig1 \
+    libx11-dev
+
+COPY ./backend/ .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python3", "main.py", "--port", "8000", "--workers=5"]

@@ -1,10 +1,10 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
-<!-- <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="docs/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
-</p> -->
+<p align="center">
+<a href= "https://www.inteli.edu.br/"><img src="https://www.inteli.edu.br/wp-content/uploads/2024/06/logo-inteli-3-768x420-1.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
+</p> 
 
-# Edge Computing
+# Edge Computin
 
 ## Grupo 02
 
@@ -30,7 +30,9 @@
 
 ## 📝 Descrição
 
-_To-do_
+O projeto foi realizado em parceria com a Abundance, uma Climate-Tech focada em impulsionar a restauração ambiental por meio do Abundance Token, do Ecossistema ESG e da Educação. A empresa tem como propósito a preservação de regiões florestais, por meio da tokenização dos ativos ambientais presentes nesse ecossistema. Cada árvore plantada pela Abundance está atrelada a uma representação digital por meio de um token registrado na Blockchain. Desse modo, busca-se contribuir para a transição rumo a uma economia sustentável.
+
+Um dos principais desafios enfrentados pela Abundance está relacionado ao atual processo de monitoramento das regiões florestais sob sua gestão. Um dado essencial, tanto para a empresa quanto para seus clientes, é a quantidade de árvores plantadas pela iniciativa, uma vez que isso reforça a transparência e a robustez do processo de monitoramento e controle de informações, o que é crucial para a obtenção de determinadas certificações. Dessa forma, foi concebida uma solução que utiliza um modelo de visão computacional para realizar a contagem de árvores, por meio de um sistema embarcado acoplável a drones capaz de capturar imagens das regiões de plantio da empresa. Por meio de uma aplicação robusta, o parceiro será capaz de submeter imagens de diferentes origens — tanto de drones, quanto de satélites — a um modelo que utiliza a técnica de filtragem e segmentação para contabilizar os ativos florestais presentes no local. Espera-se contribuir, portanto, para o aprimoramento do processo de contagem de árvores, até então realizado manualmente, de modo a reforçar a transparência de informações relacionadas ao principal ativo com o qual a Abundance trabalha.
 
 ## 📁 Estrutura de Pastas
 
@@ -56,7 +58,15 @@ A estrutura acima é projetada para manter o projeto organizado e fácil de nave
 <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/2023M8T2-Inteli/grupo2">Inteli, Amanda, Igor, Jackson, João, Kil, Luca, Patrícia, Tainara</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>. <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"></p>
 
 ## Documentação
-Para acessar a documentação do projeto, digite os seguintes comandos:
+
+  Confira nossa documentação no botão abaixo:
+
+  [![Button Click]][Link]
+
+  [Button Click]: https://img.shields.io/badge/Documentação-37a779?style=for-the-badge
+  [Link]: https://inteli-college.github.io/2024-2A-T02-EC11-G02/
+  
+Para acessar a documentação do projeto localmente, digite os seguintes comandos:
 
 ```bash
 cd docs

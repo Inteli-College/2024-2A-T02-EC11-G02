@@ -64,7 +64,7 @@ def count_trees_with_adjustments_and_plot(image_path):
     return len(predicted_objects)
 
 
-def count_trees_with_adjustments(transform_image, output_image,  min_size: float = 13.0, max_size: float = 3200.0):
+def count_trees_with_adjustments(transform_image, output_image,  min_size: float = 13.0, max_size: float = 1200.0):
     if transform_image is None:
         raise FileNotFoundError(f"Arquivo de imagem não encontrado")
     
@@ -87,10 +87,14 @@ def count_trees_with_adjustments(transform_image, output_image,  min_size: float
     print(f"Árvores detectadas antes do ajuste: {len(find_objects(labeled_image))}")
     # Filtrar componentes pequenos com um valor mínimo ajustado
     predicted_objects = []
+    area_coute = []
+
 
     for obj in find_objects(labeled_image):
         y_slice, x_slice = obj
-        if ((x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start) > min_size) and (x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start) < max_size:
+        area = (x_slice.stop - x_slice.start) * (y_slice.stop - y_slice.start)
+        area_coute.append(area)
+        if (area > min_size) and area < max_size:
             predicted_objects.append([x_slice.start, y_slice.start, x_slice.stop, y_slice.stop])
 
     # Exibir o número de árvores detectadas
@@ -100,7 +104,7 @@ def count_trees_with_adjustments(transform_image, output_image,  min_size: float
         top_left = (box[0], box[1])
         bottom_right = (box[2], box[3])
         cv2.rectangle(output_image, top_left, bottom_right, (0, 255, 0), 2)
-
+    print(f"Mediana das áreas das árvores detectadas: {np.median(area_coute)}")
     return (len(predicted_objects), output_image)
 
 

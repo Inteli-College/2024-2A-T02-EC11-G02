@@ -186,6 +186,10 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+.src/root/
+.root/
+root/
+
 # mkdocs documentation
 /site
 

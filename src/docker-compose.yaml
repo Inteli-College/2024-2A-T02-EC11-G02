@@ -2,10 +2,20 @@ version: '3'
 services:
 
   backend:
-    build: ./backend
-    restart: on-failure
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     ports:
       - "8000:8000"
+    volumes:
+      - ./root:/code/root
+    restart: on-failure
+    environment:
+      - MONGO_URI=mongodb://root:example@mongo:27017
+      - MONGO_DB=mongo
+      - FIREBASE_STORAGE_BUCKET=grupo2-93568.appspot.com
+      - FIREBASE_KEY_PATH=/code/root/grupo2-93568-firebase-adminsdk-ck9m1-2cbbaaec91.json
+
 
   mongo:
     build: ./mongo
